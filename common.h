@@ -4,7 +4,6 @@
 
 #define USE_DMAMEM_BUFFER		0		// set this to 1 to use DMAMEM for the tft buffer
 #define USE_EXTMEM_BUFFER		0		// set this to 1 to use PSRAM for the tft buffer
-#define USE_EXTMEM_ALLOC		0		// use this to divert uFont allocations to PSRAM. Beaware - this will cost 32k of RAM1
 
 
 #define USE_FLEXTFT_ILI948x		0
