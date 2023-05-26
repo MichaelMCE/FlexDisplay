@@ -2,6 +2,7 @@
 ## A basic display driver for ILI9486 series on a Teensy 4.1
 
 **Disclaimer: This is an experimental library, currently a WIP. I cannot guarantee that all functions will work nor can I guarantee that this library will work with other libraries. Use at your own risk**  
+https://github.com/david-res/ILI948x_t41_p
 
 This library can communicate with an ILI9488 TFT LCD via an 8 bit parallel interface (8080)
 It utilizes FlexIO  to write data to the screen while. 
