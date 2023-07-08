@@ -1,14 +1,19 @@
 
-#if USE_FLEXTFT_S6D04D1
+/*
+	Tab @ 4 spaces
+*/
 
-#include "S6D04D1_t41_p.h"
+
+#if USE_FLEXTFT_R61529
+
+#include "R61529_t41_p.h"
 
 #if !defined(ARDUINO_TEENSY41)
 #error This library only supports the Teensy 4.1!
 #endif
 
 
-FLASHMEM S6D04D1_t41_p::S6D04D1_t41_p (int8_t dc, int8_t cs, int8_t rst, int8_t bl) 
+FLASHMEM R61529_t41_p::R61529_t41_p (int8_t dc, int8_t cs, int8_t rst, int8_t bl) 
 {
 	_dc = dc;
 	_cs = cs;
@@ -16,58 +21,71 @@ FLASHMEM S6D04D1_t41_p::S6D04D1_t41_p (int8_t dc, int8_t cs, int8_t rst, int8_t 
 	_bl = bl;
 }
 
+
 PROGMEM static const setting_table_t power_on_setting_table[] = {
-    {S6D04D1_PWRCTL,   7, {0x80, 0x00, 0x00, 0x0B, 0x33, 0x7F, 0x7F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, 0},
-    {S6D04D1_VCMCTL,   5, {0x6E, 0x6E, 0x7F, 0x7F, 0x33, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, 0},
-    {S6D04D1_SRCCTL,   5, {0x12, 0x00, 0x03, 0xF0, 0x70, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, 0},
-    {S6D04D1_SLPOUT,   0, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, 120},
-    {S6D04D1_MADCTL,   1, {0x48, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, 0},
-    {S6D04D1_COLMOD,   1, {0x55, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, 30},
-    {S6D04D1_DISCTL,  11, {0x14, 0x14, 0x03, 0x03, 0x04, 0x03, 0x04, 0x10, 0x04, 0x14, 0x14, 0x00, 0x00, 0x00, 0x00}, 0},
-    {S6D04D1_GATECTL,  2, {0x22, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, 0},
-    {S6D04D1_WRDISBV,  1, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, 0}, //BRIGHTNESS
-    {S6D04D1_WRCABCMB, 1, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, 0},
-    {S6D04D1_MIECTL1,  3, {0x80, 0x80, 0x20, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, 0},
-    {S6D04D1_BCMODE,   1, {0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, 0},
-    {S6D04D1_MIECTL2,  3, {0x20, 0x01, 0x8F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, 0},
-    {S6D04D1_MIDCTL3,  2, {0x7C, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, 0},
-    {S6D04D1_DISPON,   0, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, 50},
+	{R61529_RESET,     0, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, 100},
+	{R61529_SLPOUT,    0, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, 20},
+	{R61529_DISLYON,   0, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, 120},
+	{R61529_MCAP,      1, {0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, 2},
+	{R61529_BLCTRL1,  20, {0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, 0},
+	{R61529_BLCTRL2,   4, {0x01, 0x00, 0xFF, 0x18, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, 0},
+	{R61529_FMAIS,     5, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, 2},
+	{R61529_DISMODE,   1, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, 0},
+	{R61529_PANDSET,   8, {0x04, 0xDF, 0x40, 0x10, 0x00, 0x01, 0x00, 0x55, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, 0},
+	{R61529_DTSNM,     5, {0x07, 0x27, 0x08, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, 0},
+	{R61529_SGDTSET,   4, {0x57, 0x00, 0x05, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, 0},
+	{R61529_DPIPCTL,   1, {0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, 0},
+	
+	{R61529_GAMSETA,  24, {0x03, 0x12, 0x1A, 0x24, 0x32, 0x4B, 0x3B, 0x29, 0x1F, 0x18, 0x12, 0x04, 0x03, 0x12, 0x1A, 0x24, 0x32, 0x4B, 0x3B, 0x29, 0x1F, 0x18, 0x12, 0x04}, 0},
+	{R61529_GAMSETB,  24, {0x03, 0x12, 0x1A, 0x24, 0x32, 0x4B, 0x3B, 0x29, 0x1F, 0x18, 0x12, 0x04, 0x03, 0x12, 0x1A, 0x24, 0x32, 0x4B, 0x3B, 0x29, 0x1F, 0x18, 0x12, 0x04}, 0},
+	{R61529_GAMSETC,  24, {0x03, 0x12, 0x1A, 0x24, 0x32, 0x4B, 0x3B, 0x29, 0x1F, 0x18, 0x12, 0x04, 0x03, 0x12, 0x1A, 0x24, 0x32, 0x4B, 0x3B, 0x29, 0x1F, 0x18, 0x12, 0x04}, 0},
+	
+	{R61529_PSCPSET,  16, {0x99, 0x06, 0x08, 0x20, 0x29, 0x04, 0x01, 0x00, 0x08, 0x01, 0x00, 0x06, 0x01, 0x00, 0x00, 0x20, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, 0},
+	{R61529_VCOMSET,   4, {0x00, 0x20, 0x20, 0x15, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, 0},
+	{R61529_NVMACTL,   4, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, 0},
+	{R61529_DDBWCTL,   6, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, 0},
+	{R61529_NVMLCTL,   1, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, 0},
+	{R61529_SETPIXF,   1, {0x55, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, 0},
+	{R61529_CASET,     4, {0x00, 0x00, 0x01, 0x3F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, 0},
+	{R61529_PASET,     4, {0x00, 0x00, 0x01, 0xDF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, 0}
 };
 
-FLASHMEM void S6D04D1_t41_p::LCDSettingTableWrite (const setting_table_t *table)
+FLASHMEM void R61529_t41_p::LCDSettingTableWrite (const setting_table_t *table)
 {
 	SglBeatWR_nPrm_8(table->command, table->parameter, table->parameters);
 	if ((table->wait) > 0)
 		delay(table->wait);
 }
 
-FLASHMEM void S6D04D1_t41_p::setRotation (const uint8_t r) 
+FLASHMEM void R61529_t41_p::setRotation (const uint8_t r) 
 { 
 	_rotation = r&0x03;
 
 	switch (_rotation){
       case 0:	
-      case 2: _width = S6D04D1_TFTWIDTH;
-             _height = S6D04D1_TFTHEIGHT;
+      case 2: _width  = R61529_TFTWIDTH;
+              _height = R61529_TFTHEIGHT;
              break;
       case 1: 
-      case 3: _width = S6D04D1_TFTHEIGHT;
-             _height = S6D04D1_TFTWIDTH;
+      case 3: _width  = R61529_TFTHEIGHT;
+              _height = R61529_TFTWIDTH;
 			 break;
 	}
 
-	SglBeatWR_nPrm_8(S6D04D1_MADCTL, &MADCTL[_rotation], 1);
+	SglBeatWR_nPrm_8(R61529_MADCTL, &MADCTL[_rotation], 1);
+	delay(30);
 }
 
-FLASHMEM void S6D04D1_t41_p::init_display ()
+FLASHMEM void R61529_t41_p::init_display ()
 {		
 	// toggle RST low to resetset
 	digitalWriteFast(_rst, LOW);
-	delay(5);
+	delay(20);
 	digitalWriteFast(_rst, HIGH);
-	delay(10);
+	delay(20);
 
 	CSLow();
+	
 	for (int i = 0; i < (int)(sizeof(power_on_setting_table) / sizeof(setting_table_t)); i++)
 		LCDSettingTableWrite(&power_on_setting_table[i]);
 
@@ -75,24 +93,23 @@ FLASHMEM void S6D04D1_t41_p::init_display ()
 	delay(5);
 }
 
-FLASHMEM void S6D04D1_t41_p::setBacklight (const uint8_t value)
+FLASHMEM void R61529_t41_p::setBacklight (const uint8_t value)
 {
     analogWrite(_bl, value);
 }
 
-FLASHMEM void S6D04D1_t41_p::begin (const uint8_t baud_div) 
+FLASHMEM void R61529_t41_p::begin (const uint8_t baud_div) 
 {
 	switch (baud_div){					// with a base freq of 240mhz
     case 2:  _baud_div = 120; break;
     case 4:  _baud_div = 60; break;
     case 8:  _baud_div = 30; break;
     case 12: _baud_div = 20; break;
-    case 15: _baud_div = 17; break;
-    case 16: _baud_div = 16; break;
-    case 17: _baud_div = 15; break;
-    case 18: _baud_div = 14; break;
-    case 19: _baud_div = 13; break;
+    case 15: _baud_div = 16; break;
+    case 16: _baud_div = 14; break;
+    case 18: _baud_div = 13; break;
     case 20: _baud_div = 12; break;
+    case 22: _baud_div = 11; break;
     case 24: _baud_div = 10; break;
     case 27: _baud_div = 9; break;
     case 30: _baud_div = 8; break;
@@ -122,29 +139,29 @@ FLASHMEM void S6D04D1_t41_p::begin (const uint8_t baud_div)
 	FlexIO_Init();
 	displayInit();
 
-	_width  = S6D04D1_TFTWIDTH;
-	_height = S6D04D1_TFTHEIGHT;
+	_width  = R61529_TFTWIDTH;
+	_height = R61529_TFTHEIGHT;
 
 }
 
-FLASHMEM void S6D04D1_t41_p::onCompleteCB (CBF callback)
+FLASHMEM void R61529_t41_p::onCompleteCB (CBF callback)
 {
 	_callback = callback;
 	isCB = true;
 }
 
-FASTRUN void S6D04D1_t41_p::setAddrWindow (uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2) 
+FASTRUN void R61529_t41_p::setAddrWindow (uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2) 
 {
 	uint8_t CommandValue[4];
 		
-	uint8_t Command = S6D04D1_CASET;
+	uint8_t Command = R61529_CASET;
 	CommandValue[0U] = x1 >> 8U;
 	CommandValue[1U] = x1 & 0xFF;
 	CommandValue[2U] = x2 >> 8U;
 	CommandValue[3U] = x2 & 0xFF;
 	SglBeatWR_nPrm_8(Command, CommandValue, 4U);
 		
-	Command = S6D04D1_PASET;
+	Command = R61529_PASET;
 	CommandValue[0U] = y1 >> 8U;
 	CommandValue[1U] = y1 & 0xFF;
 	CommandValue[2U] = y2 >> 8U;
@@ -153,23 +170,29 @@ FASTRUN void S6D04D1_t41_p::setAddrWindow (uint16_t x1, uint16_t y1, uint16_t x2
 
 }
 
-FASTRUN void S6D04D1_t41_p::pushPixels16bit (const uint16_t *pcolors, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2)
+FASTRUN void R61529_t41_p::pushPixels16bit (const uint16_t *pcolors, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2)
 {
+	while (WR_IRQTransferDone == false){
+   		//Wait for any DMA transfers to complete
+	}
+
 	uint32_t area = ((x2-x1)+1) * ((y2-y1)+1);
   
 	if (!((_lastx1 == x1) && (_lastx2 == x2) && (_lasty1 == y1) && (_lasty2 == y2))){
-		while (WR_IRQTransferDone == false){
-    		//Wait for any DMA transfers to complete
-		}
+
 
 		setAddrWindow(x1, y1, x2, y2);
 		_lastx1 = x1; _lastx2 = x2; _lasty1 = y1; _lasty2 = y2;
 	}
   
-	SglBeatWR_nPrm_16(S6D04D1_RAMWR, pcolors, area);
+	SglBeatWR_nPrm_16(R61529_RAMWR, pcolors, area);
+	
+	while (WR_IRQTransferDone == false){
+   		//Wait for any DMA transfers to complete
+	}
 }
 
-FASTRUN void S6D04D1_t41_p::pushPixels16bitAsync (const uint16_t *pcolors, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2)
+FASTRUN void R61529_t41_p::pushPixels16bitAsync (const uint16_t *pcolors, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2)
 {	
 	while (WR_IRQTransferDone == false){
     	//Wait for any DMA transfers to complete
@@ -181,63 +204,69 @@ FASTRUN void S6D04D1_t41_p::pushPixels16bitAsync (const uint16_t *pcolors, uint1
   		_lastx1 = x1; _lastx2 = x2; _lasty1 = y1; _lasty2 = y2;
 	}
   
-  	MulBeatWR_nPrm_IRQ(S6D04D1_RAMWR, pcolors, area);
+  	MulBeatWR_nPrm_IRQ(R61529_RAMWR, pcolors, area);
+  	
+  	while (WR_IRQTransferDone == false){
+   		//Wait for any DMA transfers to complete
+	}
 }
 
-FLASHMEM void S6D04D1_t41_p::displayInit () 
+FLASHMEM void R61529_t41_p::displayInit () 
 {
 	setBacklight(TFT_INTENSITY);
 	init_display();
-	setRotation(3);
+	//setRotation(3);
 }
 
-FASTRUN void S6D04D1_t41_p::CSLow () 
+FASTRUN inline void R61529_t41_p::CSLow () 
 {
-	digitalWriteFast(_cs, LOW);       //Select TFT
+	digitalWriteFast(_cs, LOW);      // Select TFT
 }
 
-FASTRUN void S6D04D1_t41_p::CSHigh () 
+FASTRUN inline void R61529_t41_p::CSHigh () 
 {
-	digitalWriteFast(_cs, HIGH);       //Deselect TFT
+	digitalWriteFast(_cs, HIGH);     // Deselect TFT
 }
 
-FASTRUN void S6D04D1_t41_p::DCLow () 
+FASTRUN inline void R61529_t41_p::DCLow () 
 {
-	digitalWriteFast(_dc, LOW);       //Writing command to TFT
+	digitalWriteFast(_dc, LOW);      // Writing command to TFT
 }
 
-FASTRUN void S6D04D1_t41_p::DCHigh () 
+FASTRUN inline void R61529_t41_p::DCHigh () 
 {
-	digitalWriteFast(_dc, HIGH);       //Writing data to TFT
+	digitalWriteFast(_dc, HIGH);     // Writing data to TFT
 }
+
 
 #pragma GCC push_options
 #pragma GCC optimize ("O0")   
-FASTRUN void S6D04D1_t41_p::microSecondDelay ()
+FASTRUN void R61529_t41_p::microSecondDelay ()
 {
-	for (uint32_t volatile  i = 0; i < 2; i++)
+	for (uint32_t volatile  i = 0; i < 5; i++)
 		__asm__ volatile ("nop\n\t");
 	//delayMicroseconds(1);
 }
 #pragma GCC pop_options
 
-FASTRUN void S6D04D1_t41_p::gpioWrite ()
+
+FASTRUN inline void R61529_t41_p::gpioWrite ()
 {
 	pFlex->setIOPinToFlexMode(36);
 	pinMode(37, OUTPUT);
 	digitalWriteFast(37, HIGH);
 }
 
-FASTRUN void S6D04D1_t41_p::gpioRead ()
+FASTRUN inline void R61529_t41_p::gpioRead ()
 {
 	pFlex->setIOPinToFlexMode(37);
 	pinMode(36, OUTPUT);
 	digitalWriteFast(36, HIGH);
 }
 
-FASTRUN void S6D04D1_t41_p::FlexIO_Init ()
+FASTRUN void R61529_t41_p::FlexIO_Init ()
 {
-	/* Get a FlexIO channel */
+  /* Get a FlexIO channel */
     pFlex = FlexIOHandler::flexIOHandler_list[2]; // use FlexIO3
     /* Pointer to the port structure in the FlexIO channel */
     p = &pFlex->port();
@@ -264,6 +293,8 @@ FASTRUN void S6D04D1_t41_p::FlexIO_Init ()
     pinMode(26, OUTPUT); // FlexIO3:14 |
     pinMode(27, OUTPUT); // FlexIO3:15 D15
 #endif
+
+
     
     pinMode(36, OUTPUT); // FlexIO3:18 WR
     pinMode(37, OUTPUT); // FlexIO3:19 RD
@@ -328,7 +359,7 @@ FASTRUN void S6D04D1_t41_p::FlexIO_Init ()
     
 }
 
-FASTRUN void S6D04D1_t41_p::FlexIO_Config_SnglBeat_Read()
+FASTRUN void R61529_t41_p::FlexIO_Config_SnglBeat_Read ()
 {
     gpioWrite();
 
@@ -381,7 +412,7 @@ FASTRUN void S6D04D1_t41_p::FlexIO_Config_SnglBeat_Read()
 }
 
 
-FASTRUN void S6D04D1_t41_p::FlexIO_Config_SnglBeat()
+FASTRUN void R61529_t41_p::FlexIO_Config_SnglBeat ()
 {
     gpioWrite();
 
@@ -396,7 +427,7 @@ FASTRUN void S6D04D1_t41_p::FlexIO_Config_SnglBeat()
        FLEXIO_SHIFTCFG_INSRC*(1)                                               /* Shifter input */
        |FLEXIO_SHIFTCFG_SSTOP(0)                                               /* Shifter stop bit disabled */
        | FLEXIO_SHIFTCFG_SSTART(0)                                             /* Shifter start bit disabled and loading data on enabled */
-       | FLEXIO_SHIFTCFG_PWIDTH(BUS_WIDTH-1);                                  /* Bus width */
+       | FLEXIO_SHIFTCFG_PWIDTH(BUS_WIDTH-1);                                            /* Bus width */
      
     p->SHIFTCTL[0] = 
         FLEXIO_SHIFTCTL_TIMSEL(0)                                              /* Shifter's assigned timer index */
@@ -434,7 +465,7 @@ FASTRUN void S6D04D1_t41_p::FlexIO_Config_SnglBeat()
 
 }
 
-FASTRUN void S6D04D1_t41_p::FlexIO_Config_MultiBeat()
+FASTRUN void R61529_t41_p::FlexIO_Config_MultiBeat ()
 {
     //uint32_t i;
     uint8_t beats = SHIFTNUM * BEATS_PER_SHIFTER;                                     //Number of beats = number of shifters * beats per shifter
@@ -496,7 +527,7 @@ FASTRUN void S6D04D1_t41_p::FlexIO_Config_MultiBeat()
         | FLEXIO_TIMCTL_PINPOL * (1U)                                                 /* Timer' pin active low */
         | FLEXIO_TIMCTL_TIMOD(1U);                                                    /* Timer mode 8-bit baud counter */
     /* Enable FlexIO */
-	p->CTRL |= FLEXIO_CTRL_FLEXEN;
+   p->CTRL |= FLEXIO_CTRL_FLEXEN;
 
    // configure interrupts
     attachInterruptVector(hw->flex_irq, ISR);
@@ -506,14 +537,16 @@ FASTRUN void S6D04D1_t41_p::FlexIO_Config_MultiBeat()
     // disable interrupts until later
     p->SHIFTSIEN &= ~(1 << SHIFTER_IRQ);
     p->TIMIEN &= ~(1 << TIMER_IRQ);
+
+    
 }
 
-FASTRUN void S6D04D1_t41_p::SglBeatWR_nPrm_8 (uint32_t const cmd, const uint8_t *value = NULL, uint32_t const length = 0)
+FASTRUN void R61529_t41_p::SglBeatWR_nPrm_8(uint32_t const cmd, const uint8_t *value = NULL, uint32_t const length = 0)
 {
-	
 	while (WR_IRQTransferDone == false){
-		//Wait for any DMA transfers to complete
-	}  
+   		//Wait for any DMA transfers to complete
+	}
+  
 
     FlexIO_Config_SnglBeat();
      uint32_t i;
@@ -539,33 +572,38 @@ FASTRUN void S6D04D1_t41_p::SglBeatWR_nPrm_8 (uint32_t const cmd, const uint8_t 
     microSecondDelay();
     DCHigh();
     microSecondDelay();
-    
-    if (length){
-        for(i = 0; i < length; i++){    
+    if(length)
+    {
+        for(i = 0; i < length; i++)
+        {    
             p->SHIFTBUF[0] = *value++;
-            while (0 == (p->SHIFTSTAT & (1 << 0))){
-            	// 
+            while(0 == (p->SHIFTSTAT & (1 << 0)))
+            {  
             }
         }
-        
-        while(0 == (p->TIMSTAT & (1 << 0))){  
-		}
+        while(0 == (p->TIMSTAT & (1 << 0)))
+            {  
+            }
     }
-    
     microSecondDelay();
     CSHigh();
     
     /* De-assert CS pin */
-	while (WR_IRQTransferDone == false){
-		//Wait for any DMA transfers to complete
+    
+    while (WR_IRQTransferDone == false){
+   		//Wait for any DMA transfers to complete
 	}
 }
 
-FASTRUN void S6D04D1_t41_p::SglBeatWR_nPrm_16 (uint32_t const cmd, const uint16_t *value, uint32_t const length)
+FASTRUN void R61529_t41_p::SglBeatWR_nPrm_16 (uint32_t const cmd, const uint16_t *value, uint32_t const _length)
 {
+	
+	volatile uint32_t length = _length;
+	
 	while (WR_IRQTransferDone == false){
-		//Wait for any DMA transfers to complete
+   		//Wait for any DMA transfers to complete
 	}
+	
 	
     FlexIO_Config_SnglBeat();
     
@@ -577,18 +615,13 @@ FASTRUN void S6D04D1_t41_p::SglBeatWR_nPrm_16 (uint32_t const cmd, const uint16_
     p->SHIFTBUF[0] = cmd;
  
     /*Wait for transfer to be completed */
-    while (0 == (p->TIMSTAT & (1 << 0))){  
-    	
-	}
-
+    while(0 == (p->TIMSTAT & (1 << 0)))
+            {  
+            }
     microSecondDelay();
     /* De-assert RS pin */
     DCHigh();
     microSecondDelay();
-
-	while(WR_IRQTransferDone == false){
-		//Wait for any DMA transfers to complete
-	}
 
     if (length){
 #if (BUS_WIDTH == 8)
@@ -627,42 +660,41 @@ FASTRUN void S6D04D1_t41_p::SglBeatWR_nPrm_16 (uint32_t const cmd, const uint16_
     
 
 #else
-      for(uint32_t i=0; i<length-1U; i++)
-      {
-      while(0 == (p->SHIFTSTAT & (1U << 0)))
-      {
-      }
-      p->SHIFTBUF[0] = *value++;
-      }
-      //Write the last byte
-      while(0 == (p->SHIFTSTAT & (1U << 0)))
-      {
-      }
-      p->TIMSTAT |= (1U << 0);
+		for (volatile uint32_t i = 0; i < length-1U; i++){
+      		while(0 == (p->SHIFTSTAT & (1U << 0))){
+      		
+      		}
 
-          p->SHIFTBUF[0] = *value++;
+      		p->SHIFTBUF[0] = *value++;
+      		
+		}
+    	
+		//Write the last byte
+		while(0 == (p->SHIFTSTAT & (1U << 0))){
+			
+		}
+		p->TIMSTAT |= (1U << 0);
+		p->SHIFTBUF[0] = *value++;
 
-          /*Wait for transfer to be completed */
-          while(0 == (p->TIMSTAT |= (1U << 0)))
-          {
-          }
+        /*Wait for transfer to be completed */
+        while(0 == (p->TIMSTAT |= (1U << 0))){
+        }
 #endif
-	}
-
+    }
     microSecondDelay();
     CSHigh();
     
- 	while (WR_IRQTransferDone == false){
-		//Wait for any DMA transfers to complete
-	}   
-
+	while (WR_IRQTransferDone == false){
+   		//Wait for any DMA transfers to complete
+	}
 }
 
-FASTRUN uint8_t S6D04D1_t41_p::readCommand (const uint16_t cmd)
+FASTRUN uint8_t R61529_t41_p::readCommand (const uint16_t cmd)
 {
-	while (WR_IRQTransferDone == false){
-		//Wait for any DMA transfers to complete
-	}
+  while(WR_IRQTransferDone == false)
+  {
+    //Wait for any DMA transfers to complete
+  }
 
     FlexIO_Config_SnglBeat();
     DCLow();
@@ -700,18 +732,14 @@ FASTRUN uint8_t S6D04D1_t41_p::readCommand (const uint16_t cmd)
     //Set FlexIO back to Write mode
     FlexIO_Config_SnglBeat();
     
-	while (WR_IRQTransferDone == false){
-		//Wait for any DMA transfers to complete
-	}
-	
 	return data;
 }
 
 
-S6D04D1_t41_p * S6D04D1_t41_p::IRQcallback = nullptr;
+R61529_t41_p * R61529_t41_p::IRQcallback = nullptr;
 
 
-FASTRUN void S6D04D1_t41_p::MulBeatWR_nPrm_IRQ (uint32_t const cmd,  const void *value, uint32_t const length) 
+FASTRUN void R61529_t41_p::MulBeatWR_nPrm_IRQ (uint32_t const cmd,  const void *value, uint32_t const length) 
 {
 	while(WR_IRQTransferDone == false){
 		//Wait for any DMA transfers to complete
@@ -764,24 +792,20 @@ FASTRUN void S6D04D1_t41_p::MulBeatWR_nPrm_IRQ (uint32_t const cmd,  const void 
     p->TIMIEN |= (1 << TIMER_IRQ);
     p->SHIFTSIEN |= (1 << SHIFTER_IRQ);
     
-	while (WR_IRQTransferDone == false){
-		//Wait for any DMA transfers to complete
+   	while (WR_IRQTransferDone == false){
+   		//Wait for any DMA transfers to complete
 	}
-    
 }
 
-FASTRUN void S6D04D1_t41_p::_onCompleteCB ()
+FASTRUN void R61529_t41_p::_onCompleteCB ()
 {
 	if (_callback)
         _callback();
 }
 
-FASTRUN void S6D04D1_t41_p::flexIRQ_Callback ()
+FASTRUN void R61529_t41_p::flexIRQ_Callback ()
 {
-	while (WR_IRQTransferDone == false){
-		//Wait for any DMA transfers to complete
-	}
-	
+  
 	if (p->TIMSTAT & (1 << TIMER_IRQ)) { // interrupt from end of burst
         p->TIMSTAT = (1 << TIMER_IRQ); // clear timer interrupt signal
         bursts_to_complete--;
@@ -819,17 +843,18 @@ FASTRUN void S6D04D1_t41_p::flexIRQ_Callback ()
   }
     asm("dsb");
     
-	while (WR_IRQTransferDone == false){
-		//Wait for any DMA transfers to complete
+    while (WR_IRQTransferDone == false){
+   		//Wait for any DMA transfers to complete
 	}
 }
 
 
 
-FASTRUN void S6D04D1_t41_p::ISR ()
+FASTRUN void R61529_t41_p::ISR ()
 {
-  asm("dsb");
-  IRQcallback->flexIRQ_Callback();
+	asm("dsb");
+	IRQcallback->flexIRQ_Callback();
 }
 
 #endif
+

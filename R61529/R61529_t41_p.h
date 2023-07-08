@@ -1,69 +1,57 @@
-#ifndef _S6D04D1_t41_p_H_
-#define _S6D04D1_t41_p_H_
+#ifndef _R61529_t41_p_H_
+#define _R61529_t41_p_H_
 
-#if USE_FLEXTFT_S6D04D1
+#if USE_FLEXTFT_R61529
 
 #include "Arduino.h"
 #include "FlexIO_t4.h"
  
 
-#define BUS_WIDTH			16   	// Available options are 8 or 16
+#define BUS_WIDTH			16   	/*Available options are 8 or 16 */
+
+
 #define SHIFTNUM			8		// number of shifters used (up to 8)
 #define BYTES_PER_BEAT		(sizeof(uint8_t))
-#define BEATS_PER_SHIFTER	(sizeof(uint32_t)/BYTES_PER_BEAT)
+#define BEATS_PER_SHIFTER 	(sizeof(uint32_t)/BYTES_PER_BEAT)
 #define BYTES_PER_BURST		(sizeof(uint32_t)*SHIFTNUM)
-#define SHIFTER_IRQ			(SHIFTNUM-1)
-#define TIMER_IRQ			0
+#define SHIFTER_IRQ 		(SHIFTNUM-1)
+#define TIMER_IRQ 			0
 #define FLEXIO_ISR_PRIORITY 64		// interrupt is timing sensitive, so use relatively high priority (supersedes USB)
 
-#define S6D04D1_TFTWIDTH   	432   // S6D04D1 TFT width in default rotation
-#define S6D04D1_TFTHEIGHT  	240   // S6D04D1 TFT height in default rotation 
 
-#define S6D04D1_PWRCTL		0xF3
-#define S6D04D1_VCMCTL		0xF4
-#define S6D04D1_SRCCTL		0xF5
-#define S6D04D1_SLPOUT		0x11
-#define S6D04D1_MADCTL		0x36
-#define S6D04D1_COLMOD		0x3A
-#define S6D04D1_DISCTL		0xF2
-#define S6D04D1_IFCTL		0xF6
-#define S6D04D1_GATECTL		0xFD
-#define S6D04D1_CASET		0x2A
-#define S6D04D1_PASET		0x2B
-#define S6D04D1_RAMWR		0x2C
-#define S6D04D1_RAMRD		0x2E
-#define S6D04D1_DISPON		0x29
-#define S6D04D1_DISPOFF		0x28
-#define S6D04D1_SLPIN		0x10
-                	
-#define S6D04D1_RPGAMCTL	0xF7
-#define S6D04D1_WRDISBV		0x51
-#define S6D04D1_WRCABCMB	0x5E
-#define S6D04D1_MIECTL1		0xCA
-#define S6D04D1_BCMODE		0xCB
-#define S6D04D1_MIECTL2		0xCC
-#define S6D04D1_MIDCTL3		0xCD
-#define S6D04D1_RNGAMCTL	0xF8
-#define S6D04D1_GPGAMCTL	0xF9
-#define S6D04D1_GNGAMCTL	0xFA
-#define S6D04D1_BPGAMCTL	0xFB
-#define S6D04D1_BNGAMCTL	0xFC
-#define S6D04D1_DCON		0xD9
-#define S6D04D1_WRPWD		0xF0
-#define S6D04D1_EDSTEST		0xFF
-#define S6D04D1_TEON		0x35
-#define S6D04D1_MDDICTL1	0xE0
-#define S6D04D1_WRCTRLD		0x53
-#define S6D04D1_WRCABC		0x55
+#define R61529_TFTWIDTH   	480		// R61529 TFT width in default rotation
+#define R61529_TFTHEIGHT  	320		// R61529 TFT height in default rotation 
 
 
 
-typedef struct _setting_table {
-    uint8_t command;
-    uint8_t parameters;
-    uint8_t parameter[15];
-    uint8_t wait;
-}setting_table_t;
+#define R61529_NOP			0x00	// No Op, also reset write state (acording to PDF)
+#define R61529_RESET		0x01	// Software reset
+#define R61529_SLPOUT		0x11	// Sleep out (Exit sleep)
+#define R61529_DISLYON		0x29	// Display ON
+#define R61529_CASET		0x2A	// Column Address Set 
+#define R61529_PASET		0x2B	// Page Address Set 
+#define R61529_RAMWR		0x2C	// Memory Write 
+#define R61529_RAMRD		0x2E	// Memory Read
+#define R61529_MADCTL		0x36	// Memory Address Control
+#define R61529_SETPIXF		0x3A	// Set Pixel Format
+#define R61529_MCAP			0xB0	// Manufacturer Command Access Protect
+#define R61529_BLCTRL1		0xB8	// Backlight Control 1
+#define R61529_BLCTRL2		0xB9	// Backlight Control 2
+#define R61529_BLCTRL3		0xBA	// Backlight Control 3
+#define R61529_FMAIS		0xB3	// Frame Memory Access and Interface Setting
+#define R61529_DISMODE		0xB4	// Display Mode
+#define R61529_PANDSET		0xC0	// Panel Driving Setting;
+#define R61529_DTSNM		0xC1	// Display Timing Setting for Normal Mode
+#define R61529_SGDTSET		0xC4	// Source/Gate Driving Timing Setting
+#define R61529_DPIPCTL		0xC6	// DPI polarity control
+#define R61529_GAMSETA		0xC8	// Gamma Setting A Set
+#define R61529_GAMSETB		0xC9	// Gamma Setting B Set
+#define R61529_GAMSETC		0xCA	// Gamma Setting C Set
+#define R61529_PSCPSET		0xD0	// Power Setting Charge Pump Setting
+#define R61529_VCOMSET		0xD1	// VCOM Setting
+#define R61529_NVMACTL		0xE0	// NVM Access Control
+#define R61529_DDBWCTL		0xE1	// Set DDB Write Control
+#define R61529_NVMLCTL		0xE2	// NVM Load Control
 
 
 #define MADCTL_RGB 0x00  // Red-Green-Blue pixel order
@@ -76,19 +64,31 @@ typedef struct _setting_table {
 #define MADCTL_MX  0x40  // Right to left
 #define MADCTL_MY  0x80  // Bottom to top
 
+// Set default pixel and rotation
+#define R61529_IXFORMAT	(MADCTL_MY | MADCTL_MV | MADCTL_RGB)
+
+
+typedef struct _setting_table {
+    uint8_t command;
+    uint8_t parameters;
+    uint8_t parameter[24];
+    uint8_t wait;
+}setting_table_t;
+
+
 
 
 //MADCTL 0,1,2,3 for setting rotation and 4 for screenshot
 #define MADCTL_ARRAY {	MADCTL_MX | MADCTL_BGR,								\
 						MADCTL_MV | MADCTL_BGR,								\
 						MADCTL_MY | MADCTL_BGR,								\
-						MADCTL_MX | MADCTL_MY | MADCTL_MV | MADCTL_BGR}
+						MADCTL_MX /*| MADCTL_MY*/ | MADCTL_MV | MADCTL_BGR}
 
 
 #ifdef __cplusplus
-class S6D04D1_t41_p {
+class R61529_t41_p {
   public:
-    S6D04D1_t41_p (int8_t dc, int8_t cs = -1, int8_t rst = -1, int8_t bl = 33);
+    R61529_t41_p (int8_t dc, int8_t cs = -1, int8_t rst = -1, int8_t bl = 33);
     void begin (const uint8_t baud_div = 20);
 
 	void LCDSettingTableWrite (const setting_table_t *table);
@@ -107,6 +107,8 @@ class S6D04D1_t41_p {
     typedef void(*CBF)();
     CBF _callback;
     void onCompleteCB (CBF callback);
+    
+    
     
   private:
 
@@ -155,7 +157,8 @@ class S6D04D1_t41_p {
     void SglBeatRD_nPrm_8(uint32_t const cmd, uint8_t const *value , uint32_t const length);
     
     void microSecondDelay();
-    uint8_t readCommand (const uint16_t cmd);
+    
+    uint8_t readCommand(const uint16_t cmd);
 
     static void ISR();
     void flexIRQ_Callback();
@@ -163,11 +166,11 @@ class S6D04D1_t41_p {
     bool isCB = false;
     void _onCompleteCB();
     
-    static S6D04D1_t41_p *IRQcallback;
+    static R61529_t41_p *IRQcallback;
     
 };
 #endif //__cplusplus
 
 #endif
 
-#endif //_IS6D04D1_t41_p_H_
+#endif //_IR61529_t41_p_H_

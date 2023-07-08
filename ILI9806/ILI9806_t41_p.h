@@ -1,7 +1,7 @@
-#ifndef _S6D04D1_t41_p_H_
-#define _S6D04D1_t41_p_H_
+#ifndef _ILI9806_t41_p_H_
+#define _ILI9806_t41_p_H_
 
-#if USE_FLEXTFT_S6D04D1
+#if USE_FLEXTFT_ILI9806
 
 #include "Arduino.h"
 #include "FlexIO_t4.h"
@@ -16,55 +16,48 @@
 #define TIMER_IRQ			0
 #define FLEXIO_ISR_PRIORITY 64		// interrupt is timing sensitive, so use relatively high priority (supersedes USB)
 
-#define S6D04D1_TFTWIDTH   	432   // S6D04D1 TFT width in default rotation
-#define S6D04D1_TFTHEIGHT  	240   // S6D04D1 TFT height in default rotation 
 
-#define S6D04D1_PWRCTL		0xF3
-#define S6D04D1_VCMCTL		0xF4
-#define S6D04D1_SRCCTL		0xF5
-#define S6D04D1_SLPOUT		0x11
-#define S6D04D1_MADCTL		0x36
-#define S6D04D1_COLMOD		0x3A
-#define S6D04D1_DISCTL		0xF2
-#define S6D04D1_IFCTL		0xF6
-#define S6D04D1_GATECTL		0xFD
-#define S6D04D1_CASET		0x2A
-#define S6D04D1_PASET		0x2B
-#define S6D04D1_RAMWR		0x2C
-#define S6D04D1_RAMRD		0x2E
-#define S6D04D1_DISPON		0x29
-#define S6D04D1_DISPOFF		0x28
-#define S6D04D1_SLPIN		0x10
-                	
-#define S6D04D1_RPGAMCTL	0xF7
-#define S6D04D1_WRDISBV		0x51
-#define S6D04D1_WRCABCMB	0x5E
-#define S6D04D1_MIECTL1		0xCA
-#define S6D04D1_BCMODE		0xCB
-#define S6D04D1_MIECTL2		0xCC
-#define S6D04D1_MIDCTL3		0xCD
-#define S6D04D1_RNGAMCTL	0xF8
-#define S6D04D1_GPGAMCTL	0xF9
-#define S6D04D1_GNGAMCTL	0xFA
-#define S6D04D1_BPGAMCTL	0xFB
-#define S6D04D1_BNGAMCTL	0xFC
-#define S6D04D1_DCON		0xD9
-#define S6D04D1_WRPWD		0xF0
-#define S6D04D1_EDSTEST		0xFF
-#define S6D04D1_TEON		0x35
-#define S6D04D1_MDDICTL1	0xE0
-#define S6D04D1_WRCTRLD		0x53
-#define S6D04D1_WRCABC		0x55
+#define ILI9806_TFTWIDTH   	854		// ILI9806 TFT width in default rotation
+#define ILI9806_TFTHEIGHT  	480		// ILI9806 TFT height in default rotation 
+
+#define ILI9806_R480x864	0x80
+#define ILI9806_R480x854	0x81
+#define ILI9806_R480x640	0x82
+#define ILI9806_R480x720	0x84
 
 
-
-typedef struct _setting_table {
-    uint8_t command;
-    uint8_t parameters;
-    uint8_t parameter[15];
-    uint8_t wait;
-}setting_table_t;
-
+#define ILI9806_NOP			0x00	// No Op, also reset write state (acording to PDF)
+#define ILI9806_SOFTRST		0x01	// Software reset
+#define ILI9806_SLPOUT		0x11	// Sleep out (Exit sleep)
+#define ILI9806_DISLYON		0x29	// Display ON
+#define ILI9806_CASET       0x2A	// Column Address Set 
+#define ILI9806_PASET       0x2B	// Page Address Set 
+#define ILI9806_RAMWR       0x2C	// Memory Write 
+#define ILI9806_RAMRD       0x2E	// Memory Read
+#define ILI9806_TREFLON		0x35	// Tearing Effect Line ON 
+#define ILI9806_VSCROLLS	0x37	// Vertical Scrolling Start Address
+#define ILI9806_IPIXFOR		0x3A	// Interface Pixel Format
+#define ILI9806_FRCTRL1		0xB1	// Frame Rate Control 1
+#define ILI9806_FRCTRL2		0xB2	// Frame Rate Control 2
+#define ILI9806_DINVCTRL	0xB4	// Display Inversion Control	
+#define ILI9806_MADCTL		0xB9	// PANELCTRL.  doesn't respond to 0x36 dispite pdf indicating so
+#define ILI9806_GIP1		0xBC	// GIP 1
+#define ILI9806_GIP2		0xBD	// GIP 2
+#define ILI9806_GIP3		0xBE	// GIP 3
+#define ILI9806_PCTRL1		0xC0	// Power Control 1
+#define ILI9806_PCTRL2		0xC1	// Power Control 2
+#define ILI9806_VCCTRL1		0xC7	// VCOM Control 1
+#define ILI9806_BLCTRL1		0xC8	// Backlight Control 2
+#define ILI9806_ENGSET		0xDF	// Engineering Setting
+#define ILI9806_PGCTRL		0xE0	// Positive Gamma Control
+#define ILI9806_NGCTRL		0xE1	// Negative Gamma Control
+#define ILI9806_VOLTMSET	0xED	// VGMP / VGMN / VGSP / VGSN Voltage Measurement Set
+#define ILI9806_PTCTRL1		0xF1	// Panel Timing Control 1
+#define ILI9806_PTCTRL2		0xF2	// Panel Timing Control 2
+#define ILI9806_DVDDVSET	0xF3	// DVDD Voltage Setting
+#define ILI9806_PRSSET		0xF7	// Panel Resolution Selection Set
+#define ILI9806_LVGLVSET	0xFC	// LVGL Voltage Setting
+#define ILI9806_EXTCCSET	0xFF
 
 #define MADCTL_RGB 0x00  // Red-Green-Blue pixel order
 #define MADCTL_GS  0x01
@@ -76,19 +69,31 @@ typedef struct _setting_table {
 #define MADCTL_MX  0x40  // Right to left
 #define MADCTL_MY  0x80  // Bottom to top
 
+// Set default pixel and rotation
+#define ILI9806_IXFORMAT	(MADCTL_MY | MADCTL_MV | MADCTL_RGB)
+
+
+typedef struct _setting_table {
+    uint8_t command;
+    uint8_t parameters;
+    uint8_t parameter[21];
+    uint8_t wait;
+}setting_table_t;
+
+
 
 
 //MADCTL 0,1,2,3 for setting rotation and 4 for screenshot
-#define MADCTL_ARRAY {	MADCTL_MX | MADCTL_BGR,								\
-						MADCTL_MV | MADCTL_BGR,								\
-						MADCTL_MY | MADCTL_BGR,								\
-						MADCTL_MX | MADCTL_MY | MADCTL_MV | MADCTL_BGR}
+#define MADCTL_ARRAY {	MADCTL_MX | MADCTL_RGB,								\
+						MADCTL_MV | MADCTL_RGB,								\
+						MADCTL_MY | MADCTL_RGB,								\
+						/*MADCTL_MX |*/ MADCTL_MY | MADCTL_MV | MADCTL_RGB}
 
 
 #ifdef __cplusplus
-class S6D04D1_t41_p {
+class ILI9806_t41_p {
   public:
-    S6D04D1_t41_p (int8_t dc, int8_t cs = -1, int8_t rst = -1, int8_t bl = 33);
+    ILI9806_t41_p (int8_t dc, int8_t cs = -1, int8_t rst = -1, int8_t bl = 33);
     void begin (const uint8_t baud_div = 20);
 
 	void LCDSettingTableWrite (const setting_table_t *table);
@@ -158,16 +163,16 @@ class S6D04D1_t41_p {
     uint8_t readCommand (const uint16_t cmd);
 
     static void ISR();
-    void flexIRQ_Callback();
+    void FlexIRQ_Callback();
 
     bool isCB = false;
     void _onCompleteCB();
     
-    static S6D04D1_t41_p *IRQcallback;
+    static ILI9806_t41_p *IRQcallback;
     
 };
 #endif //__cplusplus
 
 #endif
 
-#endif //_IS6D04D1_t41_p_H_
+#endif //_IILI9806_t41_p_H_
