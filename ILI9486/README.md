@@ -1,5 +1,6 @@
 # ILI948x_t41_p
 ## A basic display driver for ILI9486 series on a Teensy 4.1
+https://github.com/david-res/ILI948x_t41_p
 
 **Disclaimer: This is an experimental library, currently a WIP. I cannot guarantee that all functions will work nor can I guarantee that this library will work with other libraries. Use at your own risk**  
 
