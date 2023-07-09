@@ -214,7 +214,7 @@ FLASHMEM void R61529_t41_p::displayInit ()
 {
 	setBacklight(TFT_INTENSITY);
 	init_display();
-	//setRotation(3);
+	setRotation(3);
 }
 
 FASTRUN void R61529_t41_p::CSLow () 
