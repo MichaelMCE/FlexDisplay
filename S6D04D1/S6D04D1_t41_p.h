@@ -16,8 +16,10 @@
 #define TIMER_IRQ			0
 #define FLEXIO_ISR_PRIORITY 64		// interrupt is timing sensitive, so use relatively high priority (supersedes USB)
 
-#define S6D04D1_TFTWIDTH   	432   // S6D04D1 TFT width in default rotation
-#define S6D04D1_TFTHEIGHT  	240   // S6D04D1 TFT height in default rotation 
+
+
+#define S6D04D1_TFTWIDTH   	TFT_WIDTH	// S6D04D1 TFT width in default rotation
+#define S6D04D1_TFTHEIGHT  	TFT_HEIGHT	// S6D04D1 TFT height in default rotation 
 
 #define S6D04D1_PWRCTL		0xF3
 #define S6D04D1_VCMCTL		0xF4

@@ -20,8 +20,8 @@
 #define FLEXIO_ISR_PRIORITY 64 // interrupt is timing sensitive, so use relatively high priority (supersedes USB)
 
 
-#define NT35510_TFTWIDTH   960      // NT35510 TFT width in default rotation
-#define NT35510_TFTHEIGHT  540      // NT35510 TFT height in default rotation
+#define NT35510_TFTWIDTH   TFT_WIDTH	// NT35510 TFT width in default rotation
+#define NT35510_TFTHEIGHT  TFT_HEIGHT	// NT35510 TFT height in default rotation
 
 
 #define NT35510_CASET   0x2A00

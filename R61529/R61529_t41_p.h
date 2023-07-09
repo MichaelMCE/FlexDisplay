@@ -19,8 +19,8 @@
 #define FLEXIO_ISR_PRIORITY 64		// interrupt is timing sensitive, so use relatively high priority (supersedes USB)
 
 
-#define R61529_TFTWIDTH   	480		// R61529 TFT width in default rotation
-#define R61529_TFTHEIGHT  	320		// R61529 TFT height in default rotation 
+#define R61529_TFTWIDTH   	TFT_WIDTH	// R61529 TFT width in default rotation
+#define R61529_TFTHEIGHT  	TFT_HEIGHT	// R61529 TFT height in default rotation 
 
 
 

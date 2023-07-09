@@ -17,8 +17,8 @@
 #define FLEXIO_ISR_PRIORITY 64		// interrupt is timing sensitive, so use relatively high priority (supersedes USB)
 
 
-#define RM68120_TFTWIDTH   800      // RM68120 TFT width in default rotation
-#define RM68120_TFTHEIGHT  480      // RM68120 TFT height in default rotation
+#define RM68120_TFTWIDTH   TFT_WIDTH	// RM68120 TFT width in default rotation
+#define RM68120_TFTHEIGHT  TFT_HEIGHT	// RM68120 TFT height in default rotation
 
 
 #define RM68120_CASET   0x2A00

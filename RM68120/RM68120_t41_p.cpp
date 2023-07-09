@@ -14,19 +14,12 @@
 */
 
 
-
-
-
 #include "RM68120_t41_p.h"
-
 
 #if USE_FLEXTFT_RM68120
 
 
-#if !defined(ARDUINO_TEENSY41)
-#error This library only supports the Teensy 4.1!
-#endif
-
+static RM68120_t41_p STORAGETYPE lcd = RM68120_t41_p(TFT_RS, TFT_CS, TFT_RST, TFT_BL);
 
 
 

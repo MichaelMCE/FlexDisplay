@@ -17,8 +17,8 @@
 #define FLEXIO_ISR_PRIORITY 64		// interrupt is timing sensitive, so use relatively high priority (supersedes USB)
 
 
-#define ILI9806_TFTWIDTH   	854		// ILI9806 TFT width in default rotation
-#define ILI9806_TFTHEIGHT  	480		// ILI9806 TFT height in default rotation 
+#define ILI9806_TFTWIDTH   	TFT_WIDTH	// ILI9806 TFT width in default rotation
+#define ILI9806_TFTHEIGHT  	TFT_HEIGHT	// ILI9806 TFT height in default rotation 
 
 #define ILI9806_R480x864	0x80
 #define ILI9806_R480x854	0x81

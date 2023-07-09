@@ -7,9 +7,9 @@
 #include "FlexIO_t4.h"
  
 
-#define BUS_WIDTH			16   	// Available options are 8 or 16
-#define NT35516_TFTWIDTH   	960		// NT35516 TFT width in default rotation
-#define NT35516_TFTHEIGHT  	540		// NT35516 TFT height in default rotation 
+#define BUS_WIDTH			16   		// Available options are 8 or 16
+#define NT35516_TFTWIDTH   	TFT_WIDTH	// NT35516 TFT width in default rotation
+#define NT35516_TFTHEIGHT  	TFT_HEIGHT	// NT35516 TFT height in default rotation 
 
 #define NT35516_CASET		0x2A00
 #define NT35516_RASET		0x2B00

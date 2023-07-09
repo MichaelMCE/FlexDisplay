@@ -16,8 +16,8 @@
 #define FLEXIO_ISR_PRIORITY 64		// interrupt is timing sensitive, so use relatively high priority (supersedes USB)
 
 
-#define LG4572B_TFTWIDTH   	854		// LG4572B TFT width in default rotation
-#define LG4572B_TFTHEIGHT  	480		// LG4572B TFT height in default rotation 
+#define LG4572B_TFTWIDTH   	TFT_WIDTH		// LG4572B TFT width in default rotation
+#define LG4572B_TFTHEIGHT  	TFT_HEIGHT		// LG4572B TFT height in default rotation 
 
 /*
 #define LG4572B_R480x864	0x80

@@ -8,9 +8,8 @@
 
 #include "R61529_t41_p.h"
 
-#if !defined(ARDUINO_TEENSY41)
-#error This library only supports the Teensy 4.1!
-#endif
+
+static R61529_t41_p STORAGETYPE lcd = R61529_t41_p(TFT_RS, TFT_CS, TFT_RST, TFT_BL);
 
 
 FLASHMEM R61529_t41_p::R61529_t41_p (int8_t dc, int8_t cs, int8_t rst, int8_t bl) 
@@ -218,22 +217,22 @@ FLASHMEM void R61529_t41_p::displayInit ()
 	//setRotation(3);
 }
 
-FASTRUN inline void R61529_t41_p::CSLow () 
+FASTRUN void R61529_t41_p::CSLow () 
 {
 	digitalWriteFast(_cs, LOW);      // Select TFT
 }
 
-FASTRUN inline void R61529_t41_p::CSHigh () 
+FASTRUN void R61529_t41_p::CSHigh () 
 {
 	digitalWriteFast(_cs, HIGH);     // Deselect TFT
 }
 
-FASTRUN inline void R61529_t41_p::DCLow () 
+FASTRUN void R61529_t41_p::DCLow () 
 {
 	digitalWriteFast(_dc, LOW);      // Writing command to TFT
 }
 
-FASTRUN inline void R61529_t41_p::DCHigh () 
+FASTRUN void R61529_t41_p::DCHigh () 
 {
 	digitalWriteFast(_dc, HIGH);     // Writing data to TFT
 }

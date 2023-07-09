@@ -22,31 +22,27 @@
 #define USE_FLEXTFT_NT35516		0
 
 
-#if USE_FLEXTFT_ILI9486
-#define TFT_WIDTH				480
-#define TFT_HEIGHT				320
-#define CFG_STRING				"480x320*2 ILI9486 TFT Display"
-#define TFT_SPEED				20
-#elif USE_FLEXTFT_S6D04D1
+
+#if USE_FLEXTFT_S6D04D1
 #define TFT_WIDTH				432
 #define TFT_HEIGHT				240
 #define CFG_STRING				"432x240*2 S6D04D1 IPS Display"
-#define TFT_SPEED				18
-#elif USE_FLEXTFT_ILI9806
-#define TFT_WIDTH				854
-#define TFT_HEIGHT				480
-#define CFG_STRING				"854x480*2 ILI9806 IPS Display"
-#define TFT_SPEED				24		// Mhz
-#elif USE_FLEXTFT_RM68120
-#define TFT_WIDTH				800
-#define TFT_HEIGHT				480
-#define CFG_STRING				"800x480*2 RM68120 TFT Display"
-#define TFT_SPEED				40		// Mhz
+#define TFT_SPEED				18			// Mhz
 #elif USE_FLEXTFT_R61529
 #define TFT_WIDTH				480
 #define TFT_HEIGHT				320
 #define CFG_STRING				"480x320*2 R61529 IPS Display"
 #define TFT_SPEED				20
+#elif USE_FLEXTFT_ILI9486
+#define TFT_WIDTH				480
+#define TFT_HEIGHT				320
+#define CFG_STRING				"480x320*2 ILI9486 TFT Display"
+#define TFT_SPEED				20
+#elif USE_FLEXTFT_RM68120
+#define TFT_WIDTH				800
+#define TFT_HEIGHT				480
+#define CFG_STRING				"800x480*2 RM68120 TFT Display"
+#define TFT_SPEED				40
 #elif USE_FLEXTFT_LG4572B
 #define TFT_WIDTH				800
 #define TFT_HEIGHT				480
@@ -57,6 +53,11 @@
 #define TFT_HEIGHT				480
 #define CFG_STRING				"800x480*2 NT35510 IPS Display"
 #define TFT_SPEED				16
+#elif USE_FLEXTFT_ILI9806
+#define TFT_WIDTH				854
+#define TFT_HEIGHT				480
+#define CFG_STRING				"854x480*2 ILI9806 IPS Display"
+#define TFT_SPEED				24
 #elif USE_FLEXTFT_NT35516
 #define TFT_WIDTH				960
 #define TFT_HEIGHT				540
@@ -67,11 +68,14 @@
 #endif
 
 
-#define TFT_RS					10		// Register select   (DC)
+// Pins
+#define TFT_RS					10		// Register select (DC)
 #define TFT_RST					11		// Reset
 #define TFT_CS					12		// Chip select
 #define TFT_BL					33		// Backlight
 #define TFT_INTENSITY			60		// PWM value from 0 to 255
+// Read is 37
+// Write is 36
 
 
 

@@ -8,9 +8,7 @@
 
 #include "NT35510_t41_p.h"
 
-#if !defined(ARDUINO_TEENSY41)
-#error This library only supports the Teensy 4.1!
-#endif
+static NT35510_t41_p STORAGETYPE lcd = NT35510_t41_p(TFT_RS, TFT_CS, TFT_RST, TFT_BL);
 
 
 FASTRUN void NT35510_t41_p::sendCmd16Arg8 (const uint16_t cmd, const uint8_t arg)

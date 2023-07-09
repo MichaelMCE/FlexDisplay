@@ -11,9 +11,7 @@
 
 #include "NT35516_t41_p.h"
 
-#if !defined(ARDUINO_TEENSY41)
-#error This library only supports the Teensy 4.1!
-#endif
+static NT35516_t41_p STORAGETYPE lcd = NT35516_t41_p(TFT_RS, TFT_CS, TFT_RST, TFT_BL);
 
 
 #define FIXUP_COLOUR_JITTER		0

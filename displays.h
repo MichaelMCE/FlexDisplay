@@ -22,12 +22,10 @@
 void tft_update ();
 void tft_update_area (uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2);
 void tft_init ();
-
 void tft_clear (const uint16_t colour);
 void tft_rotate (const uint8_t rotation);
-
-
 uint8_t *tft_getBuffer ();
+
 
 #endif
 

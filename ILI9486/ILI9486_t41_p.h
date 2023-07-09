@@ -1,5 +1,5 @@
-#ifndef _ILI948x_t41_p_H_
-#define _ILI948x_t41_p_H_
+#ifndef _ILI9486_t41_p_H_
+#define _ILI9486_t41_p_H_
 
 
 #if USE_FLEXTFT_ILI9486
@@ -18,8 +18,8 @@
 #define FLEXIO_ISR_PRIORITY 64 // interrupt is timing sensitive, so use relatively high priority (supersedes USB)
 
 
-#define ILI9486_TFTWIDTH  	480   // ILI9486 TFT width in default rotation
-#define ILI9486_TFTHEIGHT 	320   // ILI9486 TFT height in default rotation
+#define ILI9486_TFTWIDTH  	TFT_WIDTH	// ILI9486 TFT width in default rotation
+#define ILI9486_TFTHEIGHT 	TFT_HEIGHT	// ILI9486 TFT height in default rotation
 
 #define ILI9486_NOP         0x00  // No-op
 #define ILI9486_SWRESET     0x01  // Software reset
@@ -110,9 +110,9 @@
 #define MADCTL_ARRAY { MADCTL_MX | MADCTL_BGR, MADCTL_MV | MADCTL_BGR, MADCTL_MY | MADCTL_BGR, MADCTL_MX | MADCTL_MY | MADCTL_MV | MADCTL_BGR } // ILI9486/9486
 
 #ifdef __cplusplus
-class ILI948x_t41_p {
+class ILI9486_t41_p {
   public:
-    ILI948x_t41_p(int8_t dc, int8_t cs = -1, int8_t rst = -1, int8_t bl = 33);
+    ILI9486_t41_p(int8_t dc, int8_t cs = -1, int8_t rst = -1, int8_t bl = 33);
     void begin(uint8_t baud_div = 20);
     uint8_t getBusSpd();
 
@@ -206,11 +206,11 @@ class ILI948x_t41_p {
     bool isCB = false;
     void _onCompleteCB();
     
-    static ILI948x_t41_p *IRQcallback;
+    static ILI9486_t41_p *IRQcallback;
     
 };
 #endif //__cplusplus
 
-#endif	// use IILI948x
+#endif	// use IILI9486
 
-#endif //_IILI948x_t41_p_H_
+#endif //_IILI9486_t41_p_H_

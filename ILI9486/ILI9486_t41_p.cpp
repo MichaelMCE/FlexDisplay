@@ -4,12 +4,10 @@
 
 #include "ILI9486_t41_p.h"
 
-#if !defined(ARDUINO_TEENSY41)
-#error This library only supports the Teensy 4.1!
-#endif
+static ILI9486_t41_p STORAGETYPE lcd = ILI9486_t41_p(TFT_RS, TFT_CS, TFT_RST);
 
 
-FLASHMEM ILI948x_t41_p::ILI948x_t41_p (int8_t dc, int8_t cs, int8_t rst, int8_t bl) 
+FLASHMEM ILI9486_t41_p::ILI9486_t41_p (int8_t dc, int8_t cs, int8_t rst, int8_t bl) 
 {
   _dc = dc;
   _cs = cs;
@@ -17,12 +15,12 @@ FLASHMEM ILI948x_t41_p::ILI948x_t41_p (int8_t dc, int8_t cs, int8_t rst, int8_t 
   _bl = bl;
 }
  
-FLASHMEM void ILI948x_t41_p::setBacklight (const uint8_t value)
+FLASHMEM void ILI9486_t41_p::setBacklight (const uint8_t value)
 {
     analogWrite(_bl, value);
 }
 
-FLASHMEM void ILI948x_t41_p::begin (uint8_t baud_div) 
+FLASHMEM void ILI9486_t41_p::begin (uint8_t baud_div) 
 {
   //Serial.printf("Bus speed: %d Mhz \n", baud_div);
   
@@ -97,7 +95,7 @@ FLASHMEM void ILI948x_t41_p::begin (uint8_t baud_div)
 
 }
 
-FLASHMEM uint8_t ILI948x_t41_p::setBitDepth (uint8_t bitDepth)  
+FLASHMEM uint8_t ILI9486_t41_p::setBitDepth (uint8_t bitDepth)  
 {
   uint8_t bd;
 
@@ -108,8 +106,8 @@ FLASHMEM uint8_t ILI948x_t41_p::setBitDepth (uint8_t bitDepth)
     case 18:  _bitDepth = 18;
               bd = 0x66;
               break;
-    case 24:  //Unsupported
-              return _bitDepth;
+    case 24:  _bitDepth = 18;
+              bd = 0x77;
               break;
     default:  //Unsupported
               return _bitDepth;
@@ -124,12 +122,12 @@ FLASHMEM uint8_t ILI948x_t41_p::setBitDepth (uint8_t bitDepth)
   return _bitDepth;
 }
 
-FLASHMEM uint8_t ILI948x_t41_p::getBitDepth ()
+FLASHMEM uint8_t ILI9486_t41_p::getBitDepth ()
 {
 	return _bitDepth;
 }
 
-FLASHMEM void ILI948x_t41_p::setFrameRate (const uint8_t frRate) 
+FLASHMEM void ILI9486_t41_p::setFrameRate (const uint8_t frRate) 
 {
 	_frameRate = frRate;
 
@@ -166,12 +164,12 @@ FLASHMEM void ILI948x_t41_p::setFrameRate (const uint8_t frRate)
 	SglBeatWR_nPrm_8(ILI9486_FRMCTR1, frData, 2);
 }
 
-FLASHMEM uint8_t ILI948x_t41_p::getFrameRate ()
+FLASHMEM uint8_t ILI9486_t41_p::getFrameRate ()
 {
   return _frameRate;
 }
 
-FLASHMEM void ILI948x_t41_p::setTearingEffect (bool tearingOn)
+FLASHMEM void ILI9486_t41_p::setTearingEffect (bool tearingOn)
 {
 
   _bTearingOn = tearingOn;
@@ -187,12 +185,12 @@ FLASHMEM void ILI948x_t41_p::setTearingEffect (bool tearingOn)
 
 }
 
-FLASHMEM bool ILI948x_t41_p::getTearingEffect ()
+FLASHMEM bool ILI9486_t41_p::getTearingEffect ()
 {
   return _bTearingOn;
 }
 
-FLASHMEM void ILI948x_t41_p::setTearingScanLine (uint16_t scanLine)
+FLASHMEM void ILI9486_t41_p::setTearingScanLine (uint16_t scanLine)
 {
   _tearingScanLine = scanLine;
   
@@ -201,12 +199,12 @@ FLASHMEM void ILI948x_t41_p::setTearingScanLine (uint16_t scanLine)
 
 }
 
-FLASHMEM uint16_t ILI948x_t41_p::getTearingScanLine ()
+FLASHMEM uint16_t ILI9486_t41_p::getTearingScanLine ()
 {
   return _tearingScanLine;
 }
 
-FLASHMEM void ILI948x_t41_p::setRotation (const uint8_t r) 
+FLASHMEM void ILI9486_t41_p::setRotation (const uint8_t r) 
 { 
   _rotation = r&0x03;
 
@@ -224,18 +222,18 @@ FLASHMEM void ILI948x_t41_p::setRotation (const uint8_t r)
   SglBeatWR_nPrm_8(ILI9486_MADCTL, &MADCTL[_rotation], 1);
 }
 
-FLASHMEM void ILI948x_t41_p::invertDisplay (bool invert) 
+FLASHMEM void ILI9486_t41_p::invertDisplay (bool invert) 
 {
   SglBeatWR_nPrm_8(invert ? ILI9486_INVON : ILI9486_INVOFF,0,0);
 }
 
-FLASHMEM void ILI948x_t41_p::onCompleteCB (CBF callback)
+FLASHMEM void ILI9486_t41_p::onCompleteCB (CBF callback)
 {
   _callback = callback;
   isCB = true;
 }
 
-FASTRUN void ILI948x_t41_p::setAddrWindow (uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2) 
+FASTRUN void ILI9486_t41_p::setAddrWindow (uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2) 
 {
 	uint8_t CommandValue[4];
 		
@@ -258,7 +256,7 @@ FASTRUN void ILI948x_t41_p::setAddrWindow (uint16_t x1, uint16_t y1, uint16_t x2
 	CSHigh();
 }
 
-FASTRUN void ILI948x_t41_p::pushPixels16bit (const uint16_t *pcolors, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2)
+FASTRUN void ILI9486_t41_p::pushPixels16bit (const uint16_t *pcolors, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2)
 {
 	
 
@@ -278,7 +276,7 @@ FASTRUN void ILI948x_t41_p::pushPixels16bit (const uint16_t *pcolors, uint16_t x
 	SglBeatWR_nPrm_16(ILI9486_RAMWR, pcolors, area);
 }
 
-FASTRUN void ILI948x_t41_p::pushPixels16bitAsync (const uint16_t *pcolors, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2)
+FASTRUN void ILI9486_t41_p::pushPixels16bitAsync (const uint16_t *pcolors, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2)
 {
 	while (WR_IRQTransferDone == false){
     	//Wait for any DMA transfers to complete
@@ -339,7 +337,7 @@ PROGMEM static const uint8_t initCommands[] =
 };
 
 
-FLASHMEM void ILI948x_t41_p::displayInit () 
+FLASHMEM void ILI9486_t41_p::displayInit () 
 {
   if (_rst > -1) {
     //Hardware reset
@@ -384,22 +382,22 @@ FLASHMEM void ILI948x_t41_p::displayInit ()
 }
 
 
-FASTRUN void ILI948x_t41_p::CSLow () 
+FASTRUN void ILI9486_t41_p::CSLow () 
 {
   digitalWriteFast(_cs, LOW);       //Select TFT
 }
 
-FASTRUN void ILI948x_t41_p::CSHigh () 
+FASTRUN void ILI9486_t41_p::CSHigh () 
 {
   digitalWriteFast(_cs, HIGH);       //Deselect TFT
 }
 
-FASTRUN void ILI948x_t41_p::DCLow () 
+FASTRUN void ILI9486_t41_p::DCLow () 
 {
   digitalWriteFast(_dc, LOW);       //Writing command to TFT
 }
 
-FASTRUN void ILI948x_t41_p::DCHigh () 
+FASTRUN void ILI9486_t41_p::DCHigh () 
 {
   digitalWriteFast(_dc, HIGH);       //Writing data to TFT
 }
@@ -407,7 +405,7 @@ FASTRUN void ILI948x_t41_p::DCHigh ()
 
 #pragma GCC push_options
 #pragma GCC optimize ("O0")   
-FASTRUN void ILI948x_t41_p::microSecondDelay ()
+FASTRUN void ILI9486_t41_p::microSecondDelay ()
 {
 	//for (uint32_t volatile  i = 0; i < 5; i++)
 	//	__asm__ volatile ("nop\n\t");
@@ -416,21 +414,21 @@ FASTRUN void ILI948x_t41_p::microSecondDelay ()
 #pragma GCC pop_options
 
 
-FASTRUN void ILI948x_t41_p::gpioWrite ()
+FASTRUN void ILI9486_t41_p::gpioWrite ()
 {
   pFlex->setIOPinToFlexMode(36);
   pinMode(37, OUTPUT);
   digitalWriteFast(37, HIGH);
 }
 
-FASTRUN void ILI948x_t41_p::gpioRead ()
+FASTRUN void ILI9486_t41_p::gpioRead ()
 {
   pFlex->setIOPinToFlexMode(37);
   pinMode(36, OUTPUT);
   digitalWriteFast(36, HIGH);
 }
 
-FASTRUN void ILI948x_t41_p::FlexIO_Init ()
+FASTRUN void ILI9486_t41_p::FlexIO_Init ()
 {
   /* Get a FlexIO channel */
     pFlex = FlexIOHandler::flexIOHandler_list[2]; // use FlexIO3
@@ -503,7 +501,7 @@ FASTRUN void ILI948x_t41_p::FlexIO_Init ()
     
 }
 
-FASTRUN void ILI948x_t41_p::FlexIO_Config_SnglBeat_Read ()
+FASTRUN void ILI9486_t41_p::FlexIO_Config_SnglBeat_Read ()
 {
     gpioWrite();
 
@@ -570,7 +568,7 @@ FASTRUN void ILI948x_t41_p::FlexIO_Config_SnglBeat_Read ()
 }
 
 
-FASTRUN void ILI948x_t41_p::FlexIO_Config_SnglBeat ()
+FASTRUN void ILI9486_t41_p::FlexIO_Config_SnglBeat ()
 {
     gpioWrite();
 
@@ -636,7 +634,7 @@ FASTRUN void ILI948x_t41_p::FlexIO_Config_SnglBeat ()
 
 }
 
-FASTRUN void ILI948x_t41_p::FlexIO_Config_MultiBeat ()
+FASTRUN void ILI9486_t41_p::FlexIO_Config_MultiBeat ()
 {
     //uint32_t i;
     uint8_t beats = SHIFTNUM * BEATS_PER_SHIFTER;                                //Number of beats = number of shifters * beats per shifter
@@ -710,7 +708,7 @@ FASTRUN void ILI948x_t41_p::FlexIO_Config_MultiBeat ()
     p->TIMIEN &= ~(1 << TIMER_IRQ);
 }
 
-FASTRUN void ILI948x_t41_p::SglBeatWR_nPrm_8 (uint32_t const cmd, const uint8_t *value = NULL, uint32_t const length = 0)
+FASTRUN void ILI9486_t41_p::SglBeatWR_nPrm_8 (uint32_t const cmd, const uint8_t *value = NULL, uint32_t const length = 0)
 {
 	while (WR_IRQTransferDone == false){
    	 //Wait for any DMA transfers to complete
@@ -761,7 +759,7 @@ FASTRUN void ILI948x_t41_p::SglBeatWR_nPrm_8 (uint32_t const cmd, const uint8_t 
     /* De-assert CS pin */
 }
 
-FASTRUN void ILI948x_t41_p::SglBeatWR_nPrm_16 (uint32_t const cmd, const uint16_t *value, uint32_t const length)
+FASTRUN void ILI9486_t41_p::SglBeatWR_nPrm_16 (uint32_t const cmd, const uint16_t *value, uint32_t const length)
 {
 	while (WR_IRQTransferDone == false){
     	//Wait for any DMA transfers to complete
@@ -826,9 +824,9 @@ FASTRUN void ILI948x_t41_p::SglBeatWR_nPrm_16 (uint32_t const cmd, const uint16_
 }
 
 
-ILI948x_t41_p *ILI948x_t41_p::IRQcallback = nullptr;
+ILI9486_t41_p *ILI9486_t41_p::IRQcallback = nullptr;
 
-FASTRUN void ILI948x_t41_p::MulBeatWR_nPrm_IRQ (uint32_t const cmd,  const void *value, uint32_t const length) 
+FASTRUN void ILI9486_t41_p::MulBeatWR_nPrm_IRQ (uint32_t const cmd,  const void *value, uint32_t const length) 
 {
 	while (WR_IRQTransferDone == false){
    		//Wait for any DMA transfers to complete
@@ -883,7 +881,7 @@ FASTRUN void ILI948x_t41_p::MulBeatWR_nPrm_IRQ (uint32_t const cmd,  const void 
     
 }
 
-FASTRUN void ILI948x_t41_p::_onCompleteCB ()
+FASTRUN void ILI9486_t41_p::_onCompleteCB ()
 {
 	if (_callback){
 		_callback();
@@ -891,7 +889,7 @@ FASTRUN void ILI948x_t41_p::_onCompleteCB ()
 	return;
 }
 
-FASTRUN void ILI948x_t41_p::flexIRQ_Callback ()
+FASTRUN void ILI9486_t41_p::flexIRQ_Callback ()
 {
   
 	if (p->TIMSTAT & (1 << TIMER_IRQ)){ // interrupt from end of burst
@@ -940,7 +938,7 @@ FASTRUN void ILI948x_t41_p::flexIRQ_Callback ()
 
 
 
-FASTRUN void ILI948x_t41_p::ISR ()
+FASTRUN void ILI9486_t41_p::ISR ()
 {
 	asm("dsb");
 	IRQcallback->flexIRQ_Callback();

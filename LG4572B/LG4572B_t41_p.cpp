@@ -8,9 +8,7 @@
 
 #include "LG4572B_t41_p.h"
 
-#if !defined(ARDUINO_TEENSY41)
-#error This library only supports the Teensy 4.1!
-#endif
+static LG4572B_t41_p STORAGETYPE lcd = LG4572B_t41_p(TFT_RS, TFT_CS, TFT_RST, TFT_BL);
 
 
 FLASHMEM LG4572B_t41_p::LG4572B_t41_p (int8_t dc, int8_t cs, int8_t rst, int8_t bl) 
