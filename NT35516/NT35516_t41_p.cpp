@@ -1,7 +1,7 @@
 
 /*
 
-	To improve USB throughput, increase RX_NUM (usb_rawhid.c) to max, which is currently 512
+	To improve USB throughput, increase RX_NUM (usb_rawhid.c) to max possible - 511
 
 	Tab @ 4 spaces
 */
@@ -454,8 +454,8 @@ FASTRUN void NT35516_t41_p::flexIO_Config_snglBeat ()
 
     /* Configure the timer for shift clock */
 	p->TIMCMP[0] = 
-        (((1 * 2) - 1) << 8)                                                   /* TIMCMP[15:8] = number of beats x 2 “ 1 */
-      | ((_baud_div/2) - 1);                                                   /* TIMCMP[7:0] = baud rate divider / 2 “ 1 */
+        (((1 * 2) - 1) << 8)                                                   /* TIMCMP[15:8] = number of beats x 2 Â“ 1 */
+      | ((_baud_div/2) - 1);                                                   /* TIMCMP[7:0] = baud rate divider / 2 Â“ 1 */
     
 	p->TIMCFG[0] = 
         FLEXIO_TIMCFG_TIMOUT(0)                                                /* Timer output logic one when enabled and not affected by reset */
