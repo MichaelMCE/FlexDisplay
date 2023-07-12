@@ -19,12 +19,11 @@ static uint8_t STORAGETYPE tft_buffer[CALC_PITCH_16(TFT_WIDTH)*TFT_HEIGHT_SPLIT]
 
 
 
-static void tft_clearFrame (void *buffer, const uint16_t colour)
+static void tft_clearFrame (uint16_t *pixels, const uint16_t colour)
 {
-	uint16_t *pixels = (uint16_t*)buffer;
-	
 	int tPixels = TFT_WIDTH * TFT_HEIGHT_SPLIT;
-	while (tPixels--) pixels[tPixels] = colour;		
+	for (int i = 0; i < tPixels; i++)
+		pixels[i] = colour;
 }
 
 void tft_init ()
@@ -53,7 +52,11 @@ void tft_update_area (uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2)
 
 void tft_clear (const uint16_t colour)
 {
-	tft_clearFrame((void*)tft_buffer, colour);
+	uint16_t *pixels = (uint16_t*)tft_buffer;
+	tft_clearFrame(pixels, colour);
+
+	for (int y = 0; y < TFT_HEIGHT; y++)
+		lcd.pushPixels16bit(pixels, 0, y, TFT_WIDTH-1, y);
 }
 
 uint8_t *tft_getBuffer ()
@@ -65,5 +68,12 @@ void tft_rotate (const uint8_t rotation)
 {
 	lcd.setRotation(rotation);
 }
+
+void tft_update_array (const uint16_t *pixels, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2)
+{
+	lcd.pushPixels16bit(pixels, x1, y1, x2, y2);
+}
+
+
 
 #endif
