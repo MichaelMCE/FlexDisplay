@@ -21,6 +21,9 @@ TODO: write area destination x/y
 #include <Arduino.h>
 #include "config.h"
 #include "librawhiddesc.h"
+#if USE_STARTUP_IMAGE
+#include "startup_256x142_16.h"
+#endif
 
 
 /*
@@ -103,6 +106,21 @@ static uint32_t decodeHeader (rawhid_header_t *header, uint16_t *x1, uint16_t *y
 	return 1;
 }
 
+#if USE_STARTUP_IMAGE
+static void setStartupImage ()
+{
+	// sanity check
+	if (sizeof(frame256x142) > (TFT_WIDTH * TFT_HEIGHT * 2))
+		return;
+	
+	uint16_t x1 = (TFT_WIDTH - 256) / 2;
+	uint16_t y1 = (TFT_HEIGHT - 142) / 2;
+	uint16_t x2 = (TFT_WIDTH - x1) - 1;
+	uint16_t y2 = (TFT_HEIGHT - y1) - 1;
+	tft_update_array((uint16_t*)frame256x142, x1, y1, x2, y2);
+}
+#endif
+
 void setup ()
 {
 	//Serial.begin(9600);
@@ -111,8 +129,12 @@ void setup ()
 	//printf(CFG_STRING "\r\n");
 
 	tft_init();
-	tft_clear(COLOUR_24TO16(0x000000));
-	tft_update();
+	tft_clear(0x0000);		// some displays require two initial clears
+	tft_clear(0x0000);		// first is somethings corrupted
+
+#if USE_STARTUP_IMAGE
+	setStartupImage();
+#endif
 }
 
 static void opSetWriteCfg (rawhid_header_t *desc)
@@ -266,6 +288,7 @@ void opRecvImage (rawhid_header_t *header)
 			tft_update_area(0, (y*trows), TFT_WIDTH-1, (y*trows)+trows-1);
 	}
 
+
 	const int remaining = TFT_HEIGHT % STRIP_RENDERER_HEIGHT;
 	if (remaining){
 		if (!recvArea(&dataCtx, 0, (iter*trows), TFT_WIDTH-1, (iter*trows)+remaining-1))
@@ -274,8 +297,8 @@ void opRecvImage (rawhid_header_t *header)
 			tft_update_area(0, (iter*trows), TFT_WIDTH-1, (iter*trows)+remaining-1);
 	}
 
+
 	//arm_dcache_flush(tft_getBuffer(), TFT_WIDTH * STRIP_RENDERER_HEIGHT * 2);
-	//delay(1);
 }
 #else	
 void opRecvImage (rawhid_header_t *header)
