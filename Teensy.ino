@@ -134,6 +134,7 @@ void setup ()
 
 #if USE_STARTUP_IMAGE
 	setStartupImage();
+	setStartupImage();
 #endif
 }
 
@@ -238,12 +239,18 @@ static void opSendDeviceCfg (rawhid_header_t *desc)
 	desc->u.cfg.pitch = desc->u.cfg.width*sizeof(uint16_t);
 
 #ifdef COL_CLAMP_MAX
-	desc->flags |= RAWHID_OP_FLAG_CCLAMP;	
+	desc->flags |= RAWHID_OP_FLAG_CCLAMP;
 	desc->u.cfg.rgbMin = COL_CLAMP_MIN;
 	desc->u.cfg.rgbMax = COL_CLAMP_MAX;
 #else
 	desc->u.cfg.rgbMin = 0;
 	desc->u.cfg.rgbMax = 0;
+#endif
+
+
+#if USE_STRIP_RENDERER
+	desc->flags |= RAWHID_OP_FLAG_SRENDR;
+	desc->u.cfg.stripHeight = STRIP_RENDERER_HEIGHT;
 #endif
 
 	memset(desc->u.cfg.string, 32, sizeof(desc->u.cfg.string));
