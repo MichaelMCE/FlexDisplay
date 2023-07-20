@@ -9,13 +9,13 @@
 #define USE_EXTMEM_ALLOC		0		// use this to divert uFont allocations to PSRAM. Beaware - this will cost 32k of RAM1
 #define USE_STRIP_RENDERER		1		// enable/disables updates to display by STRIP_RENDERER_HEIGHT rows per iterations per frame
 #define STRIP_RENDERER_HEIGHT	30		// as above. Intended for use with the larger panels
-
+#define USE_STARTUP_IMAGE		1		// display a power on image at start up
 
 // there can only be one
 #define USE_FLEXTFT_ILI9486		0
 #define USE_FLEXTFT_S6D04D1		0
-#define USE_FLEXTFT_ILI9806		0
-#define USE_FLEXTFT_RM68120		1
+#define USE_FLEXTFT_ILI9806		1
+#define USE_FLEXTFT_RM68120		0
 #define USE_FLEXTFT_R61529		0
 #define USE_FLEXTFT_LG4572B		0
 #define USE_FLEXTFT_NT35510		0
@@ -27,7 +27,7 @@
 #define TFT_WIDTH				432
 #define TFT_HEIGHT				240
 #define CFG_STRING				"432x240*2 S6D04D1 IPS Display"
-#define TFT_SPEED				18			// Mhz
+#define TFT_SPEED				20			// Mhz
 #elif USE_FLEXTFT_R61529
 #define TFT_WIDTH				480
 #define TFT_HEIGHT				320
@@ -62,7 +62,7 @@
 #define TFT_WIDTH				960
 #define TFT_HEIGHT				540
 #define CFG_STRING				"960x540*2 NT35516 IPS Display"
-#define TFT_SPEED				24
+#define TFT_SPEED				22
 #define COL_CLAMP_MIN			0
 #define COL_CLAMP_MAX			246
 #endif
@@ -73,7 +73,7 @@
 #define TFT_RST					11		// Reset
 #define TFT_CS					12		// Chip select
 #define TFT_BL					33		// Backlight
-#define TFT_INTENSITY			60		// PWM value from 0 to 255
+#define TFT_INTENSITY			50		// PWM value from 0 to 255
 // Read is 37
 // Write is 36
 
