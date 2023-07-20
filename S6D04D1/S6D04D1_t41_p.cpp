@@ -78,7 +78,7 @@ FLASHMEM void S6D04D1_t41_p::init_display ()
 
 FLASHMEM void S6D04D1_t41_p::setBacklight (const uint8_t value)
 {
-    analogWrite(_bl, value);
+    analogWrite(_bl, value&0x7F);
 }
 
 FLASHMEM void S6D04D1_t41_p::begin (const uint8_t baud_div) 
@@ -94,6 +94,7 @@ FLASHMEM void S6D04D1_t41_p::begin (const uint8_t baud_div)
     case 18: _baud_div = 14; break;
     case 19: _baud_div = 13; break;
     case 20: _baud_div = 12; break;
+    case 22: _baud_div = 11; break;
     case 24: _baud_div = 10; break;
     case 27: _baud_div = 9; break;
     case 30: _baud_div = 8; break;
@@ -156,8 +157,6 @@ FASTRUN void S6D04D1_t41_p::setAddrWindow (uint16_t x1, uint16_t y1, uint16_t x2
 
 FASTRUN void S6D04D1_t41_p::pushPixels16bit (const uint16_t *pcolors, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2)
 {
-	uint32_t area = ((x2-x1)+1) * ((y2-y1)+1);
-  
 	if (!((_lastx1 == x1) && (_lastx2 == x2) && (_lasty1 == y1) && (_lasty2 == y2))){
 		while (WR_IRQTransferDone == false){
     		//Wait for any DMA transfers to complete
@@ -167,7 +166,16 @@ FASTRUN void S6D04D1_t41_p::pushPixels16bit (const uint16_t *pcolors, uint16_t x
 		_lastx1 = x1; _lastx2 = x2; _lasty1 = y1; _lasty2 = y2;
 	}
   
+	const uint32_t area = ((x2-x1)+1) * ((y2-y1)+1);
 	SglBeatWR_nPrm_16(S6D04D1_RAMWR, pcolors, area);
+}
+
+FASTRUN void S6D04D1_t41_p::pushPixels (const uint16_t *pixels, uint32_t total, const int flags)
+{
+	if (!flags)
+		SglBeatWR_nPrm_16(S6D04D1_RAMWR, pixels, total);
+	else
+		SglBeatWR_nPrm_16(0x3C, pixels, total);
 }
 
 FASTRUN void S6D04D1_t41_p::pushPixels16bitAsync (const uint16_t *pcolors, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2)
