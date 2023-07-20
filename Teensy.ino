@@ -156,12 +156,12 @@ static void opSetWriteCfg (rawhid_header_t *desc)
 int recvArea (recvDataCtx_t *dataCtx, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2)
 {
 	uint8_t *dbuffer = (uint8_t*)tft_getBuffer();
-	int totalY = (y2 - y1) + 1;
+	const int pitch = ((x2 - x1) + 1) + sizeof(uint16_t);
+	const int height = (y2 - y1) + 1;
 	
-	for (int y = 0; y < totalY; y++){
-	//for (int y = y1; y <= y2; y++){
-		uint8_t *pixels = &dbuffer[y*TFT_WIDTH*sizeof(uint16_t)];
-		pixels += (x1*sizeof(uint16_t));
+	for (int y = 0; y < height; y++){
+		uint8_t *pixels = &dbuffer[y*pitch];
+		//pixels += (x1*sizeof(uint16_t));
 			
 		for (int x = x1; x <= x2; x++){
 			if (dataCtx->inCt >= PACKET_SIZE){
@@ -270,6 +270,9 @@ static void opGfx (rawhid_header_t *desc)
 
 	}else if (op == RAWHID_GFX_SCROLL){
 		// todo 
+
+	}else if (op == RAWHID_GFX_BACKLIGHT){
+		tft_backlight(desc->u.gfxop.var8[0]);
 		
 	}else if (op == RAWHID_GFX_ROTATE){
 		tft_rotate(desc->u.gfxop.var8[0]);
@@ -362,6 +365,8 @@ void opRecvImageArea (rawhid_header_t *header)
 	dataCtx.readIn = (uint8_t*)recvBuffer;
 	dataCtx.inCt = PACKET_SIZE+1;
 
+
+// todo: do a bound check
 	if (decodeHeader(header, &x1, &y1, &x2, &y2, NULL))
 		recvArea(&dataCtx, x1, y1, x2, y2);
 

@@ -26,6 +26,9 @@ void tft_clear (const uint16_t colour);
 void tft_rotate (const uint8_t rotation);
 uint8_t *tft_getBuffer ();
 
+void tft_update_array (uint16_t *pixels, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2);
+void tft_backlight (const uint8_t level);
+
 
 #endif
 
