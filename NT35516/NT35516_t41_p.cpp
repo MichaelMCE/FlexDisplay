@@ -1,7 +1,7 @@
 
 /*
 
-	To improve USB throughput, increase RX_NUM (usb_rawhid.c) to max possible - 511
+	To improve USB throughput, increase RX_NUM (usb_rawhid.c) to max, which is currently 512
 
 	Tab @ 4 spaces
 */
@@ -50,12 +50,12 @@ PROGMEM static const cmdTable_t cmdRegistertable[] = {
 	{0xCA,	1,	{0x00}},
 	{0xD0,	4,	{0x0A,0x10,0x0D,0x0F}},
 	
-    {0xD1,	16,	{0x00,0x70,0x01,0x16,0x01,0x2A,0x01,0x48,0x01,0x61,0x01,0x7D,0x01,0x94,0x01,0xb7}},
+	{0xD1,	16,	{0x00,0x70,0x01,0x16,0x01,0x2A,0x01,0x48,0x01,0x61,0x01,0x7D,0x01,0x94,0x01,0xb7}},
 	{0xD2,	16,	{0x01,0xd1,0x01,0xfe,0x02,0x1f,0x02,0x55,0x02,0x80,0x02,0x81,0x02,0xad,0x02,0xdf}},
 	{0xD3,	16,	{0x02,0xf7,0x03,0x1f,0x03,0x3a,0x03,0x59,0x03,0x70,0x03,0x8b,0x03,0x99,0x03,0xae}},
 	{0xD4,	4,	{0x03,0xFe,0x03,0xFF}},	
 	
-    {0xD5,	16,	{0x00,0x70,0x01,0x16,0x01,0x2A,0x01,0x48,0x01,0x61,0x01,0x7D,0x01,0x94,0x01,0xb7}},
+	{0xD5,	16,	{0x00,0x70,0x01,0x16,0x01,0x2A,0x01,0x48,0x01,0x61,0x01,0x7D,0x01,0x94,0x01,0xb7}},
 	{0xD6,	16,	{0x01,0xd1,0x01,0xfe,0x02,0x1f,0x02,0x55,0x02,0x80,0x02,0x81,0x02,0xad,0x02,0xdf}},
 	{0xD7,	16,	{0x02,0xf7,0x03,0x1f,0x03,0x3a,0x03,0x59,0x03,0x70,0x03,0x8b,0x03,0x99,0x03,0xae}},
 	{0xD8,	4,	{0x03,0xFd,0x03,0xFF}},
@@ -63,36 +63,36 @@ PROGMEM static const cmdTable_t cmdRegistertable[] = {
 	{0xD9,	16,	{0x00,0x70,0x01,0x16,0x01,0x2A,0x01,0x48,0x01,0x61,0x01,0x7D,0x01,0x94,0x01,0xb7}},
 	{0xDd,	16,	{0x01,0xd1,0x01,0xfe,0x02,0x1f,0x02,0x55,0x02,0x80,0x02,0x81,0x02,0xad,0x02,0xdf}},
 	{0xDe,	16,	{0x02,0xf7,0x03,0x1f,0x03,0x3a,0x03,0x59,0x03,0x70,0x03,0x8b,0x03,0x99,0x03,0xae}},
-	{0xDf,	4,	{0x03,0xFd,0x03,0xFF}},     
+	{0xDf,	4,	{0x03,0xFd,0x03,0xFF}},	 
 	
-    {0xe0,	16,	{0x00,0x70,0x01,0x16,0x01,0x2A,0x01,0x48,0x01,0x61,0x01,0x7D,0x01,0x94,0x01,0xb7}},
+	{0xe0,	16,	{0x00,0x70,0x01,0x16,0x01,0x2A,0x01,0x48,0x01,0x61,0x01,0x7D,0x01,0x94,0x01,0xb7}},
 	{0xe1,	16,	{0x01,0xd1,0x01,0xfe,0x02,0x1f,0x02,0x55,0x02,0x80,0x02,0x81,0x02,0xad,0x02,0xdf}},
 	{0xe2,	16,	{0x02,0xf7,0x03,0x1f,0x03,0x3a,0x03,0x59,0x03,0x70,0x03,0x8b,0x03,0x99,0x03,0xae}},
 	{0xe3,	4,	{0x03,0xFd,0x03,0xFF}},	
 	
-    {0xe4,	16,	{0x00,0x70,0x01,0x16,0x01,0x2A,0x01,0x48,0x01,0x61,0x01,0x7D,0x01,0x94,0x01,0xb7}},
+	{0xe4,	16,	{0x00,0x70,0x01,0x16,0x01,0x2A,0x01,0x48,0x01,0x61,0x01,0x7D,0x01,0x94,0x01,0xb7}},
 	{0xe5,	16,	{0x01,0xd1,0x01,0xfe,0x02,0x1f,0x02,0x55,0x02,0x80,0x02,0x81,0x02,0xad,0x02,0xdf}},
 	{0xe6,	16,	{0x02,0xf7,0x03,0x1f,0x03,0x3a,0x03,0x59,0x03,0x70,0x03,0x8b,0x03,0x99,0x03,0xae}},
 	{0xe7,	4,	{0x03,0xFd,0x03,0xFF}},
 	
-    {0xe8,	16,	{0x00,0x70,0x01,0x16,0x01,0x2A,0x01,0x48,0x01,0x61,0x01,0x7D,0x01,0x94,0x01,0xb7}},
+	{0xe8,	16,	{0x00,0x70,0x01,0x16,0x01,0x2A,0x01,0x48,0x01,0x61,0x01,0x7D,0x01,0x94,0x01,0xb7}},
 	{0xe9,	16,	{0x01,0xd1,0x01,0xfe,0x02,0x1f,0x02,0x55,0x02,0x80,0x02,0x81,0x02,0xad,0x02,0xdf}},
 	{0xea,	16,	{0x02,0xf7,0x03,0x1f,0x03,0x3a,0x03,0x59,0x03,0x70,0x03,0x8b,0x03,0x99,0x03,0xae}},
-	{0xeb,	4,	{0x03,0xFd,0x03,0xFF}},      
+	{0xeb,	4,	{0x03,0xFd,0x03,0xFF}},	  
 
 	{0x3A, 1, {0x05}},
 	{0x2c, 1, {0x00}},
 	
 	{0x36, 1, {NT35516_IXFORMAT}},
-    {REGFLAG_DELAY, 2, {}},
+	{REGFLAG_DELAY, 2, {}},
    
 	{0x11, 1, {0x00}},
-    {REGFLAG_DELAY, 120, {}},
+	{REGFLAG_DELAY, 120, {}},
 	
 	{0x29, 1, {0x00}},
-    {REGFLAG_DELAY, 5, {}},
+	{REGFLAG_DELAY, 5, {}},
 
-    {REGFLAG_END_OF_TABLE, 0x00, {}}
+	{REGFLAG_END_OF_TABLE, 0x00, {}}
 };
 
 
@@ -139,13 +139,13 @@ FLASHMEM void NT35516_t41_p::setRotation (const uint8_t r)
 	_rotation = r&0x03;
 
 	switch (_rotation){
-      case 0:	
-      case 2:_width  = NT35516_TFTWIDTH;
-             _height = NT35516_TFTHEIGHT;
-             break;
-      case 1: 
-      case 3:_width  = NT35516_TFTHEIGHT;
-             _height = NT35516_TFTWIDTH;
+	  case 0:	
+	  case 2:_width  = NT35516_TFTWIDTH;
+			 _height = NT35516_TFTHEIGHT;
+			 break;
+	  case 1: 
+	  case 3:_width  = NT35516_TFTHEIGHT;
+			 _height = NT35516_TFTWIDTH;
 			 break;
 	}
 
@@ -165,12 +165,12 @@ FLASHMEM void NT35516_t41_p::display_init ()
 	
 	/*
 	gpioWrite();
-    sendCmd16(NT35516_SLPOUT); // Sleep Out
-    delay(125);
-    sendCmd16(NT35516_DISPON); // Display On
-    delay(10);*/
-    
-    CSLow();
+	sendCmd16(NT35516_SLPOUT); // Sleep Out
+	delay(125);
+	sendCmd16(NT35516_DISPON); // Display On
+	delay(10);*/
+	
+	CSLow();
 	setDisplayRegisters(cmdRegistertable);
 	CSHigh();
 	
@@ -185,7 +185,7 @@ FLASHMEM void NT35516_t41_p::display_init ()
 
 FLASHMEM void NT35516_t41_p::setBacklight (const uint8_t value)
 {
-    analogWrite(_bl, value);
+	analogWrite(_bl, value&0x7F);
 }
 
 FLASHMEM void NT35516_t41_p::begin (const uint8_t baud_div) 
@@ -212,29 +212,29 @@ FLASHMEM void NT35516_t41_p::begin (const uint8_t baud_div)
 	_height = NT35516_TFTHEIGHT;
 		
 	switch (baud_div){		// calculated referencing a base freq of 240mhz. 480 / 2 / _baud_div = freq
-    case   2: _baud_div =120; break;
-    case   4: _baud_div = 60; break;
-    case   8: _baud_div = 30; break;
-    case  12: _baud_div = 20; break;
-    case  13: _baud_div = 18; break;
-    case  14: _baud_div = 17; break;
-    case  15: _baud_div = 16; break;
-    case  16: _baud_div = 15; break;
-    case  17: _baud_div = 14; break;
-    case  18: _baud_div = 13; break;
-    case  20: _baud_div = 12; break;
-    case  22: _baud_div = 11; break;
-    case  24: _baud_div = 10; break;
-    case  27: _baud_div =  9; break;
-    case  30: _baud_div =  8; break;
-    case  34: _baud_div =  7; break;
-    case  40: _baud_div =  6; break;
-    case  48: _baud_div =  5; break;
-    case  60: _baud_div =  4; break;
-    case  80: _baud_div =  3; break;
-    case 120: _baud_div =  2; break;
-    case 240: _baud_div =  1; break;
-    default:  _baud_div = 20; break;
+	case   2: _baud_div =120; break;
+	case   4: _baud_div = 60; break;
+	case   8: _baud_div = 30; break;
+	case  12: _baud_div = 20; break;
+	case  13: _baud_div = 18; break;
+	case  14: _baud_div = 17; break;
+	case  15: _baud_div = 16; break;
+	case  16: _baud_div = 15; break;
+	case  17: _baud_div = 14; break;
+	case  18: _baud_div = 13; break;
+	case  20: _baud_div = 12; break;
+	case  22: _baud_div = 11; break;
+	case  24: _baud_div = 10; break;
+	case  27: _baud_div =  9; break;
+	case  30: _baud_div =  8; break;
+	case  34: _baud_div =  7; break;
+	case  40: _baud_div =  6; break;
+	case  48: _baud_div =  5; break;
+	case  60: _baud_div =  4; break;
+	case  80: _baud_div =  3; break;
+	case 120: _baud_div =  2; break;
+	case 240: _baud_div =  1; break;
+	default:  _baud_div = 20; break;
 	}
 
 	flexIO_init();
@@ -311,22 +311,22 @@ FASTRUN void NT35516_t41_p::pushPixels16bit (uint16_t *pixels, uint16_t x1, uint
 
 FASTRUN void NT35516_t41_p::CSLow () 
 {
-	digitalWriteFast(_cs, LOW);      // Select TFT
+	digitalWriteFast(_cs, LOW);	  // Select TFT
 }
 
 FASTRUN void NT35516_t41_p::CSHigh () 
 {
-	digitalWriteFast(_cs, HIGH);     // Deselect TFT
+	digitalWriteFast(_cs, HIGH);	 // Deselect TFT
 }
 
 FASTRUN void NT35516_t41_p::DCLow () 
 {
-	digitalWriteFast(_dc, LOW);      // Writing command to TFT
+	digitalWriteFast(_dc, LOW);	  // Writing command to TFT
 }
 
 FASTRUN void NT35516_t41_p::DCHigh () 
 {
-	digitalWriteFast(_dc, HIGH);     // Writing data to TFT
+	digitalWriteFast(_dc, HIGH);	 // Writing data to TFT
 }
 
 FASTRUN void NT35516_t41_p::gpioWrite ()
@@ -339,184 +339,186 @@ FASTRUN void NT35516_t41_p::gpioWrite ()
 FASTRUN void NT35516_t41_p::flexIO_init ()
 {
 	/* Get a FlexIO channel */
-    pFlex = FlexIOHandler::flexIOHandler_list[2]; // use FlexIO3
-    /* Pointer to the port structure in the FlexIO channel */
-    p = &pFlex->port();
-    /* Pointer to the hardware structure in the FlexIO channel */
-    hw = &pFlex->hardware();
+	pFlex = FlexIOHandler::flexIOHandler_list[2]; // use FlexIO3
+	/* Pointer to the port structure in the FlexIO channel */
+	p = &pFlex->port();
+	/* Pointer to the hardware structure in the FlexIO channel */
+	hw = &pFlex->hardware();
 
-    /* Pins setup */
-    pinMode(19, OUTPUT); // FlexIO3:0 D0
-    pinMode(18, OUTPUT); // FlexIO3:1 |
-    pinMode(14, OUTPUT); // FlexIO3:2 |
-    pinMode(15, OUTPUT); // FlexIO3:3 |
-    pinMode(40, OUTPUT); // FlexIO3:4 |
-    pinMode(41, OUTPUT); // FlexIO3:5 |
-    pinMode(17, OUTPUT); // FlexIO3:6 |
-    pinMode(16, OUTPUT); // FlexIO3:7 D7
-
-#if (BUS_WIDTH == 16)
-    pinMode(22, OUTPUT); // FlexIO3:8 D8
-    pinMode(23, OUTPUT); // FlexIO3:9  |
-    pinMode(20, OUTPUT); // FlexIO3:10 |
-    pinMode(21, OUTPUT); // FlexIO3:11 |
-    pinMode(38, OUTPUT); // FlexIO3:12 |
-    pinMode(39, OUTPUT); // FlexIO3:13 |
-    pinMode(26, OUTPUT); // FlexIO3:14 |
-    pinMode(27, OUTPUT); // FlexIO3:15 D15
-#endif
-    
-    pinMode(36, OUTPUT); // FlexIO3:18 WR
-    pinMode(37, OUTPUT); // FlexIO3:19 RD
-
-    digitalWrite(36, HIGH);
-    digitalWrite(37, HIGH);
-
-    /* High speed and drive strength configuration */
-    *(portControlRegister(36)) = 0xFF;
-    *(portControlRegister(37)) = 0xFF; 
-
-    *(portControlRegister(19)) = 0xFF;
-    *(portControlRegister(18)) = 0xFF;
-    *(portControlRegister(14)) = 0xFF;
-    *(portControlRegister(15)) = 0xFF;
-    *(portControlRegister(40)) = 0xFF;
-    *(portControlRegister(41)) = 0xFF;
-    *(portControlRegister(17)) = 0xFF;
-    *(portControlRegister(16)) = 0xFF;
+	/* Pins setup */
+	pinMode(19, OUTPUT); // FlexIO3:0 D0
+	pinMode(18, OUTPUT); // FlexIO3:1 |
+	pinMode(14, OUTPUT); // FlexIO3:2 |
+	pinMode(15, OUTPUT); // FlexIO3:3 |
+	pinMode(40, OUTPUT); // FlexIO3:4 |
+	pinMode(41, OUTPUT); // FlexIO3:5 |
+	pinMode(17, OUTPUT); // FlexIO3:6 |
+	pinMode(16, OUTPUT); // FlexIO3:7 D7
 
 #if (BUS_WIDTH == 16)
-    *(portControlRegister(22)) = 0xFF;
-    *(portControlRegister(23)) = 0xFF;
-    *(portControlRegister(20)) = 0xFF;
-    *(portControlRegister(21)) = 0xFF;
-    *(portControlRegister(38)) = 0xFF;
-    *(portControlRegister(39)) = 0xFF;
-    *(portControlRegister(26)) = 0xFF;
-    *(portControlRegister(27)) = 0xFF;
+	pinMode(22, OUTPUT); // FlexIO3:8 D8
+	pinMode(23, OUTPUT); // FlexIO3:9  |
+	pinMode(20, OUTPUT); // FlexIO3:10 |
+	pinMode(21, OUTPUT); // FlexIO3:11 |
+	pinMode(38, OUTPUT); // FlexIO3:12 |
+	pinMode(39, OUTPUT); // FlexIO3:13 |
+	pinMode(26, OUTPUT); // FlexIO3:14 |
+	pinMode(27, OUTPUT); // FlexIO3:15 D15
 #endif
+	
+	pinMode(36, OUTPUT); // FlexIO3:18 WR
+	pinMode(37, OUTPUT); // FlexIO3:19 RD
 
-    /* Set clock */
-    pFlex->setClockSettings(3, 1, 0); // (480 MHz source, 1+1, 1+0) >> 480/2/1 >> 240Mhz
+	digitalWrite(36, HIGH);
+	digitalWrite(37, HIGH);
 
-    /* Set up pin mux */
-    pFlex->setIOPinToFlexMode(36);
-    pFlex->setIOPinToFlexMode(37);
 
-    pFlex->setIOPinToFlexMode(19);
-    pFlex->setIOPinToFlexMode(18);
-    pFlex->setIOPinToFlexMode(14);
-    pFlex->setIOPinToFlexMode(15);
-    pFlex->setIOPinToFlexMode(40);
-    pFlex->setIOPinToFlexMode(41);
-    pFlex->setIOPinToFlexMode(17);
-    pFlex->setIOPinToFlexMode(16);
+	/* High speed and drive strength configuration */
+	uint32_t value = 0xFF;
+	*(portControlRegister(36)) = value;
+	*(portControlRegister(37)) = value; 
+
+	*(portControlRegister(19)) = value;
+	*(portControlRegister(18)) = value;
+	*(portControlRegister(14)) = value;
+	*(portControlRegister(15)) = value;
+	*(portControlRegister(40)) = value;
+	*(portControlRegister(41)) = value;
+	*(portControlRegister(17)) = value;
+	*(portControlRegister(16)) = value;
 
 #if (BUS_WIDTH == 16)
-    pFlex->setIOPinToFlexMode(22);
-    pFlex->setIOPinToFlexMode(23);
-    pFlex->setIOPinToFlexMode(20);
-    pFlex->setIOPinToFlexMode(21);
-    pFlex->setIOPinToFlexMode(38);
-    pFlex->setIOPinToFlexMode(39);
-    pFlex->setIOPinToFlexMode(26);
-    pFlex->setIOPinToFlexMode(27);
+	*(portControlRegister(22)) = value;
+	*(portControlRegister(23)) = value;
+	*(portControlRegister(20)) = value;
+	*(portControlRegister(21)) = value;
+	*(portControlRegister(38)) = value;
+	*(portControlRegister(39)) = value;
+	*(portControlRegister(26)) = value;
+	*(portControlRegister(27)) = value;
 #endif
-    /* Enable the clock */
-    hw->clock_gate_register |= hw->clock_gate_mask;
-    /* Enable the FlexIO with fast access */
-    p->CTRL = FLEXIO_CTRL_FLEXEN;
-    
+
+
+
+	/* Set clock */
+	pFlex->setClockSettings(3, 1, 0); // (480 MHz source, 1+1, 1+0) >> 480/2/1 >> 240Mhz
+
+	/* Set up pin mux */
+	pFlex->setIOPinToFlexMode(36);
+	pFlex->setIOPinToFlexMode(37);
+
+	pFlex->setIOPinToFlexMode(19);
+	pFlex->setIOPinToFlexMode(18);
+	pFlex->setIOPinToFlexMode(14);
+	pFlex->setIOPinToFlexMode(15);
+	pFlex->setIOPinToFlexMode(40);
+	pFlex->setIOPinToFlexMode(41);
+	pFlex->setIOPinToFlexMode(17);
+	pFlex->setIOPinToFlexMode(16);
+
+#if (BUS_WIDTH == 16)
+	pFlex->setIOPinToFlexMode(22);
+	pFlex->setIOPinToFlexMode(23);
+	pFlex->setIOPinToFlexMode(20);
+	pFlex->setIOPinToFlexMode(21);
+	pFlex->setIOPinToFlexMode(38);
+	pFlex->setIOPinToFlexMode(39);
+	pFlex->setIOPinToFlexMode(26);
+	pFlex->setIOPinToFlexMode(27);
+#endif
+	/* Enable the clock */
+	hw->clock_gate_register |= hw->clock_gate_mask;
+	/* Enable the FlexIO with fast access */
+	p->CTRL = FLEXIO_CTRL_FLEXEN;
+   
 }
 
 FASTRUN void NT35516_t41_p::flexIO_Config_snglBeat ()
 {
-    gpioWrite();
+	gpioWrite();
 
-    p->CTRL &= ~FLEXIO_CTRL_FLEXEN;
-    p->CTRL |=  FLEXIO_CTRL_SWRST;
-    p->CTRL &= ~FLEXIO_CTRL_SWRST;
+	p->CTRL &= ~FLEXIO_CTRL_FLEXEN;
+	p->CTRL |=  FLEXIO_CTRL_SWRST;
+	p->CTRL &= ~FLEXIO_CTRL_SWRST;
 
-    /* Configure the shifters */
+	/* Configure the shifters */
 	p->SHIFTCFG[0] = 
-         FLEXIO_SHIFTCFG_INSRC*(1)                                             /* Shifter input */
-       | FLEXIO_SHIFTCFG_SSTOP(0)                                              /* Shifter stop bit disabled */
-       | FLEXIO_SHIFTCFG_SSTART(0)                                             /* Shifter start bit disabled and loading data on enabled */
-       | FLEXIO_SHIFTCFG_PWIDTH(BUS_WIDTH-1);                                  /* Bus width */
-     
+		 FLEXIO_SHIFTCFG_INSRC*(1)								/* Shifter input */
+	   | FLEXIO_SHIFTCFG_SSTOP(0)								/* Shifter stop bit disabled */
+	   | FLEXIO_SHIFTCFG_SSTART(0)								/* Shifter start bit disabled and loading data on enabled */
+	   | FLEXIO_SHIFTCFG_PWIDTH(BUS_WIDTH-1);					/* Bus width */
+	 
 	p->SHIFTCTL[0] = 
-        FLEXIO_SHIFTCTL_TIMSEL(0)                                              /* Shifter's assigned timer index */
-      | FLEXIO_SHIFTCTL_TIMPOL*(0)                                             /* Shift on posedge of shift clock */
-      | FLEXIO_SHIFTCTL_PINCFG(3)                                              /* Shifter's pin configured as output */
-      | FLEXIO_SHIFTCTL_PINSEL(0)                                              /* Shifter's pin start index */
-      | FLEXIO_SHIFTCTL_PINPOL*(0)                                             /* Shifter's pin active high */
-      | FLEXIO_SHIFTCTL_SMOD(2);                                               /* Shifter mode as transmit */
+		FLEXIO_SHIFTCTL_TIMSEL(0)								/* Shifter's assigned timer index */
+	  | FLEXIO_SHIFTCTL_TIMPOL*(0)								/* Shift on posedge of shift clock */
+	  | FLEXIO_SHIFTCTL_PINCFG(3)								/* Shifter's pin configured as output */
+	  | FLEXIO_SHIFTCTL_PINSEL(0)								/* Shifter's pin start index */
+	  | FLEXIO_SHIFTCTL_PINPOL*(0)								/* Shifter's pin active high */
+	  | FLEXIO_SHIFTCTL_SMOD(2);								/* Shifter mode as transmit */
 
-    /* Configure the timer for shift clock */
+	/* Configure the timer for shift clock */
 	p->TIMCMP[0] = 
-        (((1 * 2) - 1) << 8)                                                   /* TIMCMP[15:8] = number of beats x 2 Â“ 1 */
-      | ((_baud_div/2) - 1);                                                   /* TIMCMP[7:0] = baud rate divider / 2 Â“ 1 */
-    
+		(((1 * 2) - 1) << 8)									/* TIMCMP[15:8] = number of beats x 2 “ 1 */
+	  | ((_baud_div/2) - 1);									/* TIMCMP[7:0] = baud rate divider / 2 “ 1 */
+	
 	p->TIMCFG[0] = 
-        FLEXIO_TIMCFG_TIMOUT(0)                                                /* Timer output logic one when enabled and not affected by reset */
-      | FLEXIO_TIMCFG_TIMDEC(0)                                                /* Timer decrement on FlexIO clock, shift clock equals timer output */
-      | FLEXIO_TIMCFG_TIMRST(0)                                                /* Timer never reset */
-      | FLEXIO_TIMCFG_TIMDIS(2)                                                /* Timer disabled on timer compare */
-      | FLEXIO_TIMCFG_TIMENA(2)                                                /* Timer enabled on trigger high */
-      | FLEXIO_TIMCFG_TSTOP(0)                                                 /* Timer stop bit disabled */
-      | FLEXIO_TIMCFG_TSTART*(0);                                              /* Timer start bit disabled */
+		FLEXIO_TIMCFG_TIMOUT(0)									/* Timer output logic one when enabled and not affected by reset */
+	  | FLEXIO_TIMCFG_TIMDEC(0)									/* Timer decrement on FlexIO clock, shift clock equals timer output */
+	  | FLEXIO_TIMCFG_TIMRST(0)									/* Timer never reset */
+	  | FLEXIO_TIMCFG_TIMDIS(2)									/* Timer disabled on timer compare */
+	  | FLEXIO_TIMCFG_TIMENA(2)									/* Timer enabled on trigger high */
+	  | FLEXIO_TIMCFG_TSTOP(0)									/* Timer stop bit disabled */
+	  | FLEXIO_TIMCFG_TSTART*(0);								/* Timer start bit disabled */
   
 	p->TIMCTL[0] = 
-        FLEXIO_TIMCTL_TRGSEL((((0) << 2) | 1))                                 /* Timer trigger selected as shifter's status flag */
-      | FLEXIO_TIMCTL_TRGPOL*(1)                                               /* Timer trigger polarity as active low */
-      | FLEXIO_TIMCTL_TRGSRC*(1)                                               /* Timer trigger source as internal */
-      | FLEXIO_TIMCTL_PINCFG(3)                                                /* Timer' pin configured as output */
-      | FLEXIO_TIMCTL_PINSEL(18)                                               /* Timer' pin index: WR pin */
-      | FLEXIO_TIMCTL_PINPOL*(1)                                               /* Timer' pin active low */
-      | FLEXIO_TIMCTL_TIMOD(1);                                                /* Timer mode as dual 8-bit counters baud/bit */
+		FLEXIO_TIMCTL_TRGSEL((((0) << 2) | 1))					/* Timer trigger selected as shifter's status flag */
+	  | FLEXIO_TIMCTL_TRGPOL*(1)								/* Timer trigger polarity as active low */
+	  | FLEXIO_TIMCTL_TRGSRC*(1)								/* Timer trigger source as internal */
+	  | FLEXIO_TIMCTL_PINCFG(3)									/* Timer' pin configured as output */
+	  | FLEXIO_TIMCTL_PINSEL(18)								/* Timer' pin index: WR pin */
+	  | FLEXIO_TIMCTL_PINPOL*(1)								/* Timer' pin active low */
+	  | FLEXIO_TIMCTL_TIMOD(1);									/* Timer mode as dual 8-bit counters baud/bit */
 
-    /* Enable FlexIO */
+	/* Enable FlexIO */
 	p->CTRL |= FLEXIO_CTRL_FLEXEN;
 
 }
 #include <USBHost_t36.h>
 FASTRUN void NT35516_t41_p::sglBeatWR_nPrm_16 (uint32_t const cmd, uint16_t *value, const uint32_t length)
 {
-    NVIC_DISABLE_IRQ(IRQ_USBHS);
-    NVIC_DISABLE_IRQ(IRQ_USBPHY0);
+	NVIC_DISABLE_IRQ(IRQ_USBHS);
+	NVIC_DISABLE_IRQ(IRQ_USBPHY0);
 	__disable_irq();
 	
 	//delayNanoseconds(20);
-    CSLow();
+	CSLow();
 	//delayNanoseconds(20);
-    DCLow();
+	DCLow();
 	delayNanoseconds(40);
 	
 
-    p->SHIFTBUF[0] = cmd;
+	p->SHIFTBUF[0] = cmd;
 	while (0 == (p->SHIFTSTAT & (1 << 0))){
-		
 	}
 	
 	delayNanoseconds(20);
-    DCHigh();
+	DCHigh();
 	delayNanoseconds(20);
-    
-    if (length){
-    	delayNanoseconds(20);
+	
+	if (length){
+		delayNanoseconds(20);
 
 		for (uint32_t i = 0; i < length; i++){
 			p->SHIFTBUF[0] = *value++;
 
-      		while (0 == (p->SHIFTSTAT & (3 << 0))){
-      			
-    		}
+	  		while (0 == (p->SHIFTSTAT & (3 << 0))){
+			}
 		}
 
 	}
 
 	//delayNanoseconds(20);
-    CSHigh();
+	CSHigh();
 	//delayNanoseconds(20);
 
 	__enable_irq();
