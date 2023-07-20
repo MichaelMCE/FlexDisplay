@@ -17,7 +17,7 @@ FLASHMEM ILI9486_t41_p::ILI9486_t41_p (int8_t dc, int8_t cs, int8_t rst, int8_t 
  
 FLASHMEM void ILI9486_t41_p::setBacklight (const uint8_t value)
 {
-    analogWrite(_bl, value);
+    analogWrite(_bl, value&0x7F);
 }
 
 FLASHMEM void ILI9486_t41_p::begin (uint8_t baud_div) 
