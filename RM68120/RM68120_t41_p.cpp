@@ -48,7 +48,7 @@ FLASHMEM RM68120_t41_p::RM68120_t41_p (int8_t dc, int8_t cs, int8_t rst, int8_t 
 
 FLASHMEM void RM68120_t41_p::setBacklight (const uint8_t value)
 {
-    analogWrite(_bl, value);
+    analogWrite(_bl, value&0x7F);
 }
 
 FLASHMEM void RM68120_t41_p::begin (uint8_t baud_div) 
