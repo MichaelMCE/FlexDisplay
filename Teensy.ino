@@ -156,7 +156,7 @@ static void opSetWriteCfg (rawhid_header_t *desc)
 int recvArea (recvDataCtx_t *dataCtx, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2)
 {
 	uint8_t *dbuffer = (uint8_t*)tft_getBuffer();
-	const int pitch = ((x2 - x1) + 1) + sizeof(uint16_t);
+	const int pitch = ((x2 - x1) + 1) * sizeof(uint16_t);
 	const int height = (y2 - y1) + 1;
 	
 	for (int y = 0; y < height; y++){
