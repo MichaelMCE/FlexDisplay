@@ -97,7 +97,7 @@ FLASHMEM void ILI9806_t41_p::init_display ()
 
 FLASHMEM void ILI9806_t41_p::setBacklight (const uint8_t value)
 {
-    analogWrite(_bl, value);
+    analogWrite(_bl, value&0x7F);
 }
 
 FLASHMEM void ILI9806_t41_p::begin (const uint8_t baud_div) 
