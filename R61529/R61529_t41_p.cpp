@@ -72,7 +72,7 @@ FLASHMEM void R61529_t41_p::setRotation (const uint8_t r)
 	}
 
 	SglBeatWR_nPrm_8(R61529_MADCTL, &MADCTL[_rotation], 1);
-	delay(30);
+	delay(1);
 }
 
 FLASHMEM void R61529_t41_p::init_display ()
@@ -94,7 +94,7 @@ FLASHMEM void R61529_t41_p::init_display ()
 
 FLASHMEM void R61529_t41_p::setBacklight (const uint8_t value)
 {
-    analogWrite(_bl, value);
+    analogWrite(_bl, value&0x7F);
 }
 
 FLASHMEM void R61529_t41_p::begin (const uint8_t baud_div) 
