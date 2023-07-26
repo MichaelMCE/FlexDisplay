@@ -31,26 +31,6 @@
 #pragma once
 
 
-
-/*
-
-Notes:
-
-Remove "usb_rawhid_class RawHID;" from "hardware/teensy/avr/cores/teensy4/usb_inst.cpp" ~line 67
-ie;
-#ifdef RAWHID_INTERFACE
-//usb_rawhid_class RawHID;
-#endif
-
-
-
-
-*/
-
-
-
-
-
 #include "usb_desc.h"
 
 #if defined(RAWHID_INTERFACE)
