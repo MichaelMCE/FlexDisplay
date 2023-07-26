@@ -1,7 +1,7 @@
 /* 
 
 Intended for compiling with:
-https://github.com/MichaelMCE/TeensyFlexIoDisplay
+https://github.com/MichaelMCE/FlexDisplay
 
 Or alternatively roll your own:
 Add your own display wrapper by implementing the below functions around your display driver
@@ -13,7 +13,15 @@ Add your own display wrapper by implementing the below functions around your dis
 	tft_rotate (uint8_t)
 
 
-TODO: write area destination x/y
+	VID:0x16C0
+	PID:0x0486
+	Inf:0
+	Ep:0x04
+	
+	Use libusb inf-wizard to install a driver for the 'RawHid interface 0' device.
+
+
+TODO: implement writeArea destination selection 
 
 */
 
@@ -28,14 +36,7 @@ TODO: write area destination x/y
 #include "rawhid/usb_rawhidex.c"
 
 
-/*
-	VID:0x16C0
-	PID:0x0486
-	Inf:0
-	Ep:0x04
-	
-	Use libusb inf-wizard to install a driver for the 'RawHid interface 0' device.
-*/
+
 
 typedef struct _recvData{
 	uint8_t *readIn;
@@ -43,8 +44,6 @@ typedef struct _recvData{
 }recvDataCtx_t;
 
 
-
-#define COLOUR_24TO16(c)	((uint16_t)(((((c)>>16)&0xF8)<<8) | ((((c)>>8)&0xFC)<<3) | (((c)&0xF8)>>3)))
 #define PACKET_SIZE			RAWHID_RX_SIZE_480			// Dont change - bad things happen 
 
 static config_t config;
@@ -331,7 +330,7 @@ void opRecvImage (rawhid_header_t *header)
 		uint8_t *dbuffer = (uint8_t*)tft_getBuffer();
 		int bytesIn = 0;
 				
-		int totalReads = (len / PACKET_SIZE);
+		int totalReads = len / PACKET_SIZE;
 		if (!totalReads) totalReads = 1;
 		
 		while (totalReads--){
@@ -340,9 +339,9 @@ void opRecvImage (rawhid_header_t *header)
 			dbuffer += PACKET_SIZE;
 		}
 
-		int finalRead = (len%PACKET_SIZE);
+		int finalRead = len % PACKET_SIZE;
 		if (finalRead){
-			bytesIn = usb_recv(recvBuffer);
+			bytesIn = usb_recv2((void**)&recvBuffer);
 			if (bytesIn > 0)
 				memcpy(dbuffer, recvBuffer, finalRead);
 		}
