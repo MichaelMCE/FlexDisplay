@@ -1,4 +1,6 @@
 
+#pragma once
+
 //	16bit 565
 //	width: 256
 //  height: 142
