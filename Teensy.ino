@@ -24,6 +24,8 @@ TODO: write area destination x/y
 #if USE_STARTUP_IMAGE
 #include "startup_256x142_16.h"
 #endif
+#include "rawhid/usb_rawhidex.h"
+#include "rawhid/usb_rawhidex.c"
 
 
 /*
@@ -46,26 +48,29 @@ typedef struct _recvData{
 #define PACKET_SIZE			RAWHID_RX_SIZE_480			// Dont change - bad things happen 
 
 static config_t config;
-static uint8_t recvBuffer[PACKET_SIZE];
+static uint8_t *recvBuffer = NULL;
+static usb_rawhid_classex RawHid;
 
 
 
+static inline int usb_recv2 (void **buffer)
+{
+	int ret = RawHid.recv2(buffer, 10);
+	recvBuffer = (uint8_t*)*buffer;
+	return ret;
+}
 
 static inline int usb_recv (void *buffer)
 {
-	return RawHID.recv(buffer, 10);
-	
-	//return usb_serial_read(buffer, PACKET_SIZE);
+	return RawHid.recv(buffer, 10);
 }
 
 static inline int usb_send (void *buffer, const size_t size)
 {
-	return RawHID.send(buffer, size);
-	
-	//return usb_serial_write(buffer, size);
+	return RawHid.send(buffer, size);
 }
 
-static uint32_t calcWriteCrc (rawhid_header_t *desc)
+static inline uint32_t calcWriteCrc (rawhid_header_t *desc)
 {
 	uint32_t crc = desc->op ^ desc->flags;
 
@@ -75,7 +80,7 @@ static uint32_t calcWriteCrc (rawhid_header_t *desc)
 	return crc;
 }
 
-static uint32_t decodeOp (rawhid_header_t *desc)
+static inline uint32_t decodeOp (rawhid_header_t *desc)
 {
 	uint32_t crc = calcWriteCrc(desc);
 	if (crc != desc->crc){
@@ -85,7 +90,7 @@ static uint32_t decodeOp (rawhid_header_t *desc)
 	return desc->op;
 }
 
-static uint32_t decodeHeader (rawhid_header_t *header, uint16_t *x1, uint16_t *y1, uint16_t *x2, uint16_t *y2, uint32_t *len)
+static inline uint32_t decodeHeader (rawhid_header_t *header, uint16_t *x1, uint16_t *y1, uint16_t *x2, uint16_t *y2, uint32_t *len)
 {
 	if ((header->u.write.x2 <= header->u.write.x1) || (header->u.write.y2 <= header->u.write.y1)){
 		//printf("header area invalid\r\n");
@@ -125,9 +130,11 @@ void setup ()
 {
 	//Serial.begin(9600);
 	//while (!Serial);
-	//printf("RawHID\r\n");
+	//printf("RawHid\r\n");
 	//printf(CFG_STRING "\r\n");
 
+	//usb_rawhid_configure();
+	
 	tft_init();
 	tft_clear(0x0000);		// some displays require two initial clears
 	tft_clear(0x0000);		// first is somethings corrupted
@@ -155,23 +162,24 @@ static void opSetWriteCfg (rawhid_header_t *desc)
 
 int recvArea (recvDataCtx_t *dataCtx, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2)
 {
-	uint8_t *dbuffer = (uint8_t*)tft_getBuffer();
-	const int pitch = ((x2 - x1) + 1) * sizeof(uint16_t);
+	uint16_t *dbuffer = (uint16_t*)tft_getBuffer();
+	const int pitch = ((x2 - x1) + 1);// * sizeof(uint16_t);
 	const int height = (y2 - y1) + 1;
 	
 	for (int y = 0; y < height; y++){
-		uint8_t *pixels = &dbuffer[y*pitch];
+		uint16_t *pixels = &dbuffer[y*pitch];
 		//pixels += (x1*sizeof(uint16_t));
 			
 		for (int x = x1; x <= x2; x++){
 			if (dataCtx->inCt >= PACKET_SIZE){
 				dataCtx->inCt = 0;
-				if (usb_recv(dataCtx->readIn) != PACKET_SIZE){
+				if (usb_recv2((void**)&dataCtx->readIn) != PACKET_SIZE){
 					return 0;
 				}
 			}
-			*(pixels)++ = dataCtx->readIn[dataCtx->inCt++];
-			*(pixels)++ = dataCtx->readIn[dataCtx->inCt++];
+			*(pixels)++ = *((uint16_t*)&dataCtx->readIn[dataCtx->inCt]);
+			dataCtx->inCt += 2;
+			//*(pixels)++ = dataCtx->readIn[dataCtx->inCt++];
 		}
 	}
 	return 1;
@@ -361,14 +369,35 @@ void opRecvImageArea (rawhid_header_t *header)
 	uint16_t x2 = 0;
 	uint16_t y2 = 0;
 
-	recvDataCtx_t dataCtx;
-	dataCtx.readIn = (uint8_t*)recvBuffer;
-	dataCtx.inCt = PACKET_SIZE+1;
+	//recvDataCtx_t dataCtx;
+	//dataCtx.readIn = (uint8_t*)recvBuffer;
+	//dataCtx.inCt = PACKET_SIZE+1;
 
+	uint8_t *dbuffer = (uint8_t*)tft_getBuffer();
+	uint8_t *readIn = (uint8_t*)recvBuffer;
+	uint32_t len = 0;
 
 // todo: do a bound check
-	if (decodeHeader(header, &x1, &y1, &x2, &y2, NULL))
-		recvArea(&dataCtx, x1, y1, x2, y2);
+	if (decodeHeader(header, &x1, &y1, &x2, &y2, &len)){
+		//recvArea(&dataCtx, x1, y1, x2, y2);
+		
+		uint32_t tReads = len / PACKET_SIZE;
+		for (uint32_t i = 0; i < tReads; i++){
+			if (usb_recv2((void**)&readIn) != PACKET_SIZE)
+				return;
+
+			memcpy(dbuffer, readIn, PACKET_SIZE);
+			dbuffer += PACKET_SIZE;
+		}
+		
+		uint32_t remaining = len % PACKET_SIZE;
+		if (remaining){
+			if (usb_recv2((void**)&readIn) != PACKET_SIZE)
+				return;
+
+			memcpy(dbuffer, readIn, remaining);
+		}
+	}
 
 	if (updateDisplay)
 		tft_update_area(x1, y1, x2, y2);
@@ -377,23 +406,23 @@ void opRecvImageArea (rawhid_header_t *header)
 void loop ()
 {
 	rawhid_header_t *desc = (rawhid_header_t*)recvBuffer;
-	memset(desc, 0, sizeof(*desc));
+	//memset(desc, 0, sizeof(*desc));
 		
 	while(1){
-	desc->op = 0;
+	//desc->op = 0;
 	
-	int bytesIn = usb_recv(desc);
+	int bytesIn = usb_recv2((void**)&desc);
 	if (bytesIn != PACKET_SIZE) return;
 
 	const int op = decodeOp(desc);
 	//printf("op: %i\n", (op));
 	
-	if (op == RAWHID_OP_WRITEIMAGE){
-		opRecvImage(desc);
-
-	}else if (op == RAWHID_OP_WRITEAREA){
+	if (op == RAWHID_OP_WRITEAREA){
 		opRecvImageArea(desc);
 		
+	}else if (op == RAWHID_OP_WRITEIMAGE){
+		opRecvImage(desc);
+
 	}else if (op == RAWHID_OP_GFXOP){
 		opGfx(desc);
 		
