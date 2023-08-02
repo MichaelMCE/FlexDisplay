@@ -1,27 +1,19 @@
+
 /* 
 
-Intended for compiling with:
-https://github.com/MichaelMCE/FlexDisplay
-
-Or alternatively roll your own:
-Add your own display wrapper by implementing the below functions around your display driver
-
-	void tft_init (void)
-	void tft_clear (uint16_t)
-	uint8_t *tft_getBuffer (void)
-	void tft_update (void)
-	tft_rotate (uint8_t)
+Intended for compiling with: https://github.com/MichaelMCE/FlexDisplay
+To compile: In Arduino Tools menu, select USB Type 'Raw HID 512'
+Timings intended for and tested with CPU Speed 720mhz
 
 
-	VID:0x16C0
-	PID:0x0486
-	Inf:0
-	Ep:0x04
-	
-	Use libusb inf-wizard to install a driver for the 'RawHid interface 0' device.
+USB Detail:
+  VID: 0x16C0
+  PID: 0x0486
+  Interface: 0
+  Receive Endpoint: 0x04
+  Transmit Endpoint: 0x83
 
-
-TODO: implement writeArea destination selection 
+  Use libusb inf-wizard to install a driver for the 'RawHid interface 0' device.
 
 */
 
@@ -29,12 +21,11 @@ TODO: implement writeArea destination selection
 #include <Arduino.h>
 #include "config.h"
 #include "librawhiddesc.h"
+#include "hid/usb_hid.h"
+#include "hid/usb_hid.c"
 #if USE_STARTUP_IMAGE
 #include "startup_256x142_16.h"
 #endif
-#include "rawhid/usb_rawhidex.h"
-#include "rawhid/usb_rawhidex.c"
-
 
 
 
@@ -44,7 +35,6 @@ typedef struct _recvData{
 }recvDataCtx_t;
 
 
-#define PACKET_SIZE			RAWHID_RX_SIZE_480			// Dont change - bad things happen 
 
 static config_t config;
 static uint8_t *recvBuffer = NULL;
@@ -132,6 +122,7 @@ void setup ()
 	//printf("RawHid\r\n");
 	//printf(CFG_STRING "\r\n");
 
+	// not needed here as is called from within teensy4/usb.c
 	//usb_rawhid_configure();
 	
 	tft_init();
@@ -162,12 +153,11 @@ static void opSetWriteCfg (rawhid_header_t *desc)
 int recvArea (recvDataCtx_t *dataCtx, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2)
 {
 	uint16_t *dbuffer = (uint16_t*)tft_getBuffer();
-	const int pitch = ((x2 - x1) + 1);// * sizeof(uint16_t);
+	const int pitch = ((x2 - x1) + 1);
 	const int height = (y2 - y1) + 1;
 	
 	for (int y = 0; y < height; y++){
 		uint16_t *pixels = &dbuffer[y*pitch];
-		//pixels += (x1*sizeof(uint16_t));
 			
 		for (int x = x1; x <= x2; x++){
 			if (dataCtx->inCt >= PACKET_SIZE){
@@ -178,7 +168,6 @@ int recvArea (recvDataCtx_t *dataCtx, uint16_t x1, uint16_t y1, uint16_t x2, uin
 			}
 			*(pixels)++ = *((uint16_t*)&dataCtx->readIn[dataCtx->inCt]);
 			dataCtx->inCt += 2;
-			//*(pixels)++ = dataCtx->readIn[dataCtx->inCt++];
 		}
 	}
 	return 1;
@@ -368,18 +357,11 @@ void opRecvImageArea (rawhid_header_t *header)
 	uint16_t x2 = 0;
 	uint16_t y2 = 0;
 
-	//recvDataCtx_t dataCtx;
-	//dataCtx.readIn = (uint8_t*)recvBuffer;
-	//dataCtx.inCt = PACKET_SIZE+1;
-
 	uint8_t *dbuffer = (uint8_t*)tft_getBuffer();
 	uint8_t *readIn = (uint8_t*)recvBuffer;
 	uint32_t len = 0;
 
-// todo: do a bound check
 	if (decodeHeader(header, &x1, &y1, &x2, &y2, &len)){
-		//recvArea(&dataCtx, x1, y1, x2, y2);
-		
 		uint32_t tReads = len / PACKET_SIZE;
 		for (uint32_t i = 0; i < tReads; i++){
 			if (usb_recv2((void**)&readIn) != PACKET_SIZE)
@@ -397,7 +379,6 @@ void opRecvImageArea (rawhid_header_t *header)
 			memcpy(dbuffer, readIn, remaining);
 		}
 	}
-
 	if (updateDisplay)
 		tft_update_area(x1, y1, x2, y2);
 }
@@ -405,35 +386,31 @@ void opRecvImageArea (rawhid_header_t *header)
 void loop ()
 {
 	rawhid_header_t *desc = (rawhid_header_t*)recvBuffer;
-	//memset(desc, 0, sizeof(*desc));
 		
-	while(1){
-	//desc->op = 0;
-	
-	int bytesIn = usb_recv2((void**)&desc);
-	if (bytesIn != PACKET_SIZE) return;
+	while (1){
+	  int bytesIn = usb_recv2((void**)&desc);
+	  if (bytesIn != PACKET_SIZE) return;
 
-	const int op = decodeOp(desc);
-	//printf("op: %i\n", (op));
+	  const int op = decodeOp(desc);
+	  //printf("op: %i\n", (op));
 	
-	if (op == RAWHID_OP_WRITEAREA){
-		opRecvImageArea(desc);
+	  if (op == RAWHID_OP_WRITEAREA){
+		  opRecvImageArea(desc);
 		
-	}else if (op == RAWHID_OP_WRITEIMAGE){
-		opRecvImage(desc);
+	  }else if (op == RAWHID_OP_WRITEIMAGE){
+		  opRecvImage(desc);
 
-	}else if (op == RAWHID_OP_GFXOP){
-		opGfx(desc);
+	  }else if (op == RAWHID_OP_GFXOP){
+		  opGfx(desc);
 		
-	}else if (op == RAWHID_OP_GETCFG){
-		opSendDeviceCfg(desc);
+	  }else if (op == RAWHID_OP_GETCFG){
+		  opSendDeviceCfg(desc);
 		
-	}else if (op == RAWHID_OP_SETCFG){
-		opSetWriteCfg(desc);
+	  }else if (op == RAWHID_OP_SETCFG){
+		  opSetWriteCfg(desc);
 
-	}else if (op == RAWHID_OP_WRITETILE){
-		opWriteTiles(desc);
-	}
-	
+	  }else if (op == RAWHID_OP_WRITETILE){
+		  opWriteTiles(desc);
+	  }
 	}
 }
