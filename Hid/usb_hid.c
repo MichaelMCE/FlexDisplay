@@ -37,7 +37,7 @@
 
 
 
-#define TX_NUM   RECIEVE_BUFFERS
+#define TX_NUM   TRANSMIT_BUFFERS
 static transfer_t tx_transfer[TX_NUM] __attribute__ ((used, aligned(32)));
 static uint8_t txbuffer[RAWHID_TX_SIZE_480 * TX_NUM];
 
@@ -45,7 +45,7 @@ static uint8_t tx_head = 0;
 static uint16_t tx_packet_size = RAWHID_RX_SIZE_480;
 
 
-#define RX_NUM  TRANSMIT_BUFFERS
+#define RX_NUM  RECIEVE_BUFFERS
 static transfer_t rx_transfer[RX_NUM] __attribute__ ((used, aligned(32)));
 static uint8_t rx_buffer[RAWHID_RX_SIZE_480 * RX_NUM] __attribute__ ((aligned(32)));
 static uint8_t rx_list[RX_NUM + 1];
